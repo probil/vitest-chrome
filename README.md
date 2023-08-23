@@ -33,8 +33,10 @@ Use the setup file to assign the mocked `chrome` object to the
 
 ```javascript
 // vitest.init.js
+import * as chrome from '../src/index'
 
-Object.assign(global, require('vitest-chrome'))
+// Add chrome object to global scope
+Object.assign(global, chrome)
 ```
 
 Import `chrome` from `vitest-chrome` for Intellisense and linting.
@@ -208,4 +210,4 @@ project, with thanks to
 compiling the schemas.
 
 Special thanks to [@jacksteamdev](https://github.com/jacksteamdev)
-the author of [`jest-chrome`](https://github.com/extend-chrome/jest-chrome) (which is project is based on)
+the author of [`jest-chrome`](https://github.com/extend-chrome/jest-chrome) (which this project is based on)
