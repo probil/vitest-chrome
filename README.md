@@ -1,7 +1,7 @@
-# `jest-chrome`
+# `vitest-chrome`
 
 A complete mock of the Chrome API for Chrome extensions, for use
-with Jest.
+with Vitest.
 
 TypeScript support is built in. Each function and event is based
 on the
@@ -11,35 +11,37 @@ package.
 ## Installation
 
 ```sh
-npm i jest-chrome -D
+npm i vitest-chrome -D
 ```
 
 Set `chrome` in the global scope during setup so that it is
-mocked in imported modules. Add a setup file to `jest.config.js`:
+mocked in imported modules. Add a setup file to `vite.config.js`:
 
 ```javascript
-// jest.config.js
+// vitest.config.js
 
-module.exports = {
-  // Add this line to your Jest config
-  setupFilesAfterEnv: ['./jest.setup.js'],
-}
+export default defineConfig({
+  test: {
+    // Add this line to your Vitest config (if you don't have it yet)
+    setupFiles: './vitest.init.ts',
+  }
+})
 ```
 
 Use the setup file to assign the mocked `chrome` object to the
 `global` object:
 
 ```javascript
-// jest.setup.js
+// vitest.init.js
 
-Object.assign(global, require('jest-chrome'))
+Object.assign(global, require('vitest-chrome'))
 ```
 
-Import `chrome` from `jest-chrome` for Intellisense and linting.
+Import `chrome` from `vitest-chrome` for Intellisense and linting.
 This is the same object as `chrome` in the global scope.
 
 ```javascript
-import { chrome } from 'jest-chrome'
+import { chrome } from 'vitest-chrome'
 ```
 
 ## Usage
@@ -62,8 +64,8 @@ those arguments.
 
 ```javascript
 test('chrome api events', () => {
-  const listenerSpy = jest.fn()
-  const sendResponseSpy = jest.fn()
+  const listenerSpy = vi.fn()
+  const sendResponseSpy = vi.fn()
 
   chrome.runtime.onMessage.addListener(listenerSpy)
 
@@ -117,7 +119,7 @@ set to handle the callback.
 test('chrome api functions with callback', () => {
   const message = { greeting: 'hello?' }
   const response = { greeting: 'here I am' }
-  const callbackSpy = jest.fn()
+  const callbackSpy = vi.fn()
 
   chrome.runtime.sendMessage.mockImplementation(
     (message, callback) => {
@@ -159,7 +161,7 @@ test('chrome api functions with lastError', () => {
 
   // lastError setup
   const lastErrorMessage = 'this is an error'
-  const lastErrorGetter = jest.fn(() => lastErrorMessage)
+  const lastErrorGetter = vi.fn(() => lastErrorMessage)
   const lastError = {
     get message() {
       return lastErrorGetter()
@@ -179,8 +181,8 @@ test('chrome api functions with lastError', () => {
   )
 
   // callback implementation
-  const lastErrorSpy = jest.fn()
-  const callbackSpy = jest.fn(() => {
+  const lastErrorSpy = vi.fn()
+  const callbackSpy = vi.fn(() => {
     if (chrome.runtime.lastError) {
       lastErrorSpy(chrome.runtime.lastError.message)
     }
@@ -205,5 +207,5 @@ project, with thanks to
 [`sinon-chrome`](https://github.com/acvetkov/sinon-chrome) for
 compiling the schemas.
 
-Special thanks to [@shellscape](https://github.com/shellscape)
-for transferring the NPM package name `jest-chrome` to us!
+Special thanks to [@jacksteamdev](https://github.com/jacksteamdev)
+the author of [`jest-chrome`](https://github.com/extend-chrome/jest-chrome) (which is project is based on)

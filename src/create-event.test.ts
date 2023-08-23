@@ -1,14 +1,15 @@
 import { createEvent } from './create-event'
+import { vi, beforeEach, test, describe, expect } from 'vitest'
 
 beforeEach(() => {
-  jest.clearAllMocks()
+  vi.clearAllMocks()
 })
 
 describe('CallableEvent', () => {
   test('addListener', () => {
     const selector = (x: any) => [x]
     const event = createEvent(selector)
-    const spy = jest.fn()
+    const spy = vi.fn()
 
     event.addListener(spy)
 
@@ -21,7 +22,7 @@ describe('CallableEvent', () => {
   test('getListeners', () => {
     const selector = (x: any) => [x]
     const event = createEvent(selector)
-    const spy = jest.fn()
+    const spy = vi.fn()
 
     event.addListener(spy)
 
@@ -36,7 +37,7 @@ describe('CallableEvent', () => {
   test('hasListeners', () => {
     const selector = (x: any) => [x]
     const event = createEvent(selector)
-    const spy = jest.fn()
+    const spy = vi.fn()
 
     expect(event.hasListeners()).toBe(false)
 
@@ -50,8 +51,8 @@ describe('CallableEvent', () => {
   test('hasListener 1', () => {
     const selector = (x: any) => [x]
     const event = createEvent(selector)
-    const spy1 = jest.fn()
-    const spy2 = jest.fn()
+    const spy1 = vi.fn()
+    const spy2 = vi.fn()
 
     expect(event.hasListener(spy1)).toBe(false)
     expect(event.hasListener(spy2)).toBe(false)
@@ -67,7 +68,7 @@ describe('CallableEvent', () => {
   test('removeListener 1', () => {
     const selector = (x: any) => [x]
     const event = createEvent(selector)
-    const spy = jest.fn()
+    const spy = vi.fn()
 
     event.addListener(spy)
     event.removeListener(spy)
@@ -80,8 +81,8 @@ describe('CallableEvent', () => {
   test('removeListener 2', () => {
     const selector = (x: any) => [x]
     const event = createEvent(selector)
-    const spy1 = jest.fn()
-    const spy2 = jest.fn()
+    const spy1 = vi.fn()
+    const spy2 = vi.fn()
 
     event.addListener(spy1)
     event.addListener(spy2)
@@ -101,7 +102,7 @@ describe('CallableEvent', () => {
   test('callListeners 1', () => {
     const selector = (x: any) => [x]
     const event = createEvent(selector)
-    const spy = jest.fn()
+    const spy = vi.fn()
 
     event.addListener(spy)
     event.callListeners('test')
@@ -113,8 +114,8 @@ describe('CallableEvent', () => {
   test('callListeners 2', () => {
     const selector = (x: any) => [x, 1]
     const event = createEvent(selector)
-    const spy1 = jest.fn()
-    const spy2 = jest.fn()
+    const spy1 = vi.fn()
+    const spy2 = vi.fn()
 
     event.addListener(spy1)
     event.addListener(spy2)
@@ -137,7 +138,7 @@ describe('CallableEvent', () => {
   test('callListeners 3', () => {
     const selector = (x: string, y: number) => Array(y).fill(x)
     const event = createEvent(selector)
-    const spy = jest.fn()
+    const spy = vi.fn()
 
     event.addListener(spy)
     event.callListeners('test', 3)
@@ -156,8 +157,8 @@ describe('createEvent', () => {
 
     expect(event1).not.toBe(event2)
 
-    const spy1 = jest.fn()
-    const spy2 = jest.fn()
+    const spy1 = vi.fn()
+    const spy2 = vi.fn()
 
     event1.addListener(spy1)
     event2.addListener(spy2)

@@ -1,8 +1,9 @@
 import { createEvent } from './create-event'
-import { Storage } from './jest-chrome'
+import { Storage } from './vitest-chrome'
+import { Mock, vi } from 'vitest'
 
 /**
- * Namespace member data format from jest-chrome-schema.json
+ * Namespace member data format from vitest-chrome-schema.json
  *
  * @interface SchemaData
  * @template T Type of namespace member
@@ -31,7 +32,7 @@ export const addEvent = (
   const event = createEvent((...args: any[]) => {
     if (args.length > parameters.length) {
       throw new Error(
-        `Max number of arguments for ${name}.addListener is ${length}`,
+        `Max number of arguments for ${name}.addListener is ${parameters.length}`,
       )
     }
 
@@ -65,8 +66,8 @@ export const addEvent = (
 export const addFunction = (
   { name }: SchemaData<'function'>,
   target: any,
-) => {
-  const fn = jest.fn()
+): Mock<any, any> => {
+  const fn = vi.fn()
   Object.assign(target, { [name]: fn })
 
   return fn
@@ -93,10 +94,10 @@ export const addProperty = (
 
 export function addStorageArea(): Storage.StorageArea {
   return {
-    clear: jest.fn(),
-    get: jest.fn(),
-    getBytesInUse: jest.fn(),
-    remove: jest.fn(),
-    set: jest.fn(),
+    clear: vi.fn(),
+    get: vi.fn(),
+    getBytesInUse: vi.fn(),
+    remove: vi.fn(),
+    set: vi.fn(),
   }
 }

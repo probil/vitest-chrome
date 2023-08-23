@@ -1,68 +1,80 @@
-import jestChromeSchema from './jest-chrome-schema.json';
-import { addEvent, addFunction, addProperty } from './add-elements';
-import { JestChrome } from './jest-chrome';
+import vitestChromeSchema from './vitest-chrome-schema.json'
+import {
+  addEvent,
+  addFunction,
+  addProperty,
+} from './add-elements'
+import { VitestChrome } from './vitest-chrome'
 
-export function createHandler(schema = jestChromeSchema as any): ProxyHandler<JestChrome> {
+export function createHandler(
+  schema = vitestChromeSchema as any,
+): ProxyHandler<VitestChrome> {
   return {
     ownKeys() {
-      return Reflect.ownKeys(schema);
+      return Reflect.ownKeys(schema)
     },
     getOwnPropertyDescriptor(target, prop) {
       if (prop in schema) {
         return {
           enumerable: true,
           configurable: true,
-        };
-      }
-      else {
+        }
+      } else {
         return {
           enumerable: false,
           configurable: false,
-        };
+        }
       }
     },
     set(target, key, value) {
-      if (key in schema &&
+      if (
+        key in schema &&
         key === 'lastError' &&
-        !(typeof value === 'object' &&
-          typeof value?.message === 'string')) {
-        throw new TypeError('chrome.runtime.lastError should be type { message: string }');
+        !(
+          typeof value === 'object' &&
+          typeof value?.message === 'string'
+        )
+      ) {
+        throw new TypeError(
+          'chrome.runtime.lastError should be type { message: string }',
+        )
       }
-      return Reflect.set(target, key, value);
+      return Reflect.set(target, key, value)
     },
     deleteProperty(target, key) {
       // Mark property as deleted, so it won't be retrieved from the schema
-      return Reflect.set(target, key, null);
+      return Reflect.set(target, key, null)
     },
     has(target, key) {
-      const inTarget = key in target && Reflect.get(target, key);
-      return inTarget !== null && !!inTarget;
+      const inTarget = key in target && Reflect.get(target, key)
+      return inTarget !== null && !!inTarget
     },
     get(target, key) {
       if (key in target) {
-        const value = Reflect.get(target, key);
+        const value = Reflect.get(target, key)
         // Check that the value wasn't deleted
-        return value !== null ? value : undefined;
-      }
-      else if (key in schema) {
+        return value !== null ? value : undefined
+      } else if (key in schema) {
         switch (schema[key].type) {
           case 'event':
-            return addEvent(schema[key], target);
+            return addEvent(schema[key], target)
           case 'function':
-            return addFunction(schema[key], target);
+            return addFunction(schema[key], target)
           case 'property':
-            return addProperty(schema[key], target);
+            return addProperty(schema[key], target)
           // default is namespace
           default: {
-            const proxy = new Proxy<Record<string, any>>({}, createHandler(schema[key]));
-            Object.assign(target, { [key]: proxy });
-            return proxy;
+            const proxy = new Proxy<Record<string, any>>(
+              {},
+              createHandler(schema[key]),
+            )
+            Object.assign(target, { [key]: proxy })
+            return proxy
           }
         }
-      }
-      else {
-        return undefined;
+      } else {
+        return undefined
       }
     },
-  };
+  }
 }

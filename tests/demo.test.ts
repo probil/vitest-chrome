@@ -1,8 +1,9 @@
 import { chrome } from '../src'
+import { vi, test, expect } from 'vitest'
 
 test('chrome api events', () => {
-  const listenerSpy = jest.fn()
-  const sendResponseSpy = jest.fn()
+  const listenerSpy = vi.fn()
+  const sendResponseSpy = vi.fn()
 
   chrome.runtime.onMessage.addListener(listenerSpy)
 
@@ -39,7 +40,7 @@ test('chrome api functions', () => {
 test('chrome api functions with callback', () => {
   const message = { greeting: 'hello?' }
   const response = { greeting: 'here I am' }
-  const callbackSpy = jest.fn()
+  const callbackSpy = vi.fn()
 
   chrome.runtime.sendMessage.mockImplementation(
     (message, callback) => {
@@ -62,7 +63,7 @@ test('chrome api functions with lastError', () => {
 
   // lastError setup
   const lastErrorMessage = 'this is an error'
-  const lastErrorGetter = jest.fn(() => lastErrorMessage)
+  const lastErrorGetter = vi.fn(() => lastErrorMessage)
   const lastError = {
     get message() {
       return lastErrorGetter()
@@ -82,8 +83,8 @@ test('chrome api functions with lastError', () => {
   )
 
   // callback implementation
-  const lastErrorSpy = jest.fn()
-  const callbackSpy = jest.fn(() => {
+  const lastErrorSpy = vi.fn()
+  const callbackSpy = vi.fn(() => {
     if (chrome.runtime.lastError) {
       lastErrorSpy(chrome.runtime.lastError.message)
     }

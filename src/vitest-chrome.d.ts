@@ -1,5 +1,10 @@
 /* eslint-disable no-shadow-restricted-names */
-import { CallableEvent, EventCallback, MonotypeEventSelector } from './create-event'
+import {
+  CallableEvent,
+  EventCallback,
+  MonotypeEventSelector,
+} from './create-event'
+import { MockedFunction } from 'vitest'
 
 // Derived from @types/chrome:
 // Type definitions for Chrome extension development
@@ -15,9 +20,9 @@ import { CallableEvent, EventCallback, MonotypeEventSelector } from './create-ev
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 // TypeScript Version: 2.4
 
-export type JestChrome = typeof JestChromeNamespace
+export type VitestChrome = typeof VitestChromeNamespace
 
-export namespace JestChromeNamespace {
+export namespace VitestChromeNamespace {
   export { Alarms as alarms }
   export { Browser as browser }
   export { Bookmarks as bookmarks }
@@ -244,7 +249,9 @@ export namespace Alarms {
   }
 
   export interface AlarmEvent
-    extends JestChromeNamespace.events.Event<(alarm: Alarm) => void> {}
+    extends VitestChromeNamespace.events.Event<
+      (alarm: Alarm) => void
+    > {}
 
   /**
    * Creates an alarm. Near the time(s) specified by alarmInfo, the onAlarm event is fired. If there is another alarm with the same name (or no name if none is specified), it will be cancelled and replaced by this alarm.
@@ -255,7 +262,7 @@ export namespace Alarms {
    *
    * @param alarmInfo Describes when the alarm should fire. The initial time must be specified by either when or delayInMinutes (but not both). If periodInMinutes is set, the alarm will repeat every periodInMinutes minutes after the initial event. If neither when or delayInMinutes is set for a repeating alarm, periodInMinutes is used as the default for delayInMinutes.
    */
-  export const create: jest.MockedFunction<typeof chrome.alarms.create>
+  export const create: MockedFunction<typeof chrome.alarms.create>
 
   /**
    * Gets an array of all the alarms.
@@ -264,7 +271,7 @@ export namespace Alarms {
    *
    * function(array of Alarm alarms) {...};
    */
-  export const getAll: jest.MockedFunction<typeof chrome.alarms.getAll>
+  export const getAll: MockedFunction<typeof chrome.alarms.getAll>
   /**
    * Clears all alarms.
    *
@@ -272,7 +279,7 @@ export namespace Alarms {
    *
    * function(boolean wasCleared) {...};
    */
-  export const clearAll: jest.MockedFunction<typeof chrome.alarms.clearAll>
+  export const clearAll: MockedFunction<typeof chrome.alarms.clearAll>
   /**
    * Clears the alarm with the given name.
    *
@@ -282,7 +289,7 @@ export namespace Alarms {
    *
    * function(boolean wasCleared) {...};
    */
-  export const clear: jest.MockedFunction<typeof chrome.alarms.clear>
+  export const clear: MockedFunction<typeof chrome.alarms.clear>
 
   /**
    * Retrieves details about the specified alarm.
@@ -291,7 +298,7 @@ export namespace Alarms {
    *
    * function( Alarm alarm) {...};
    */
-  export const get: jest.MockedFunction<typeof chrome.alarms.get>
+  export const get: MockedFunction<typeof chrome.alarms.get>
 
   /**  Fired when an alarm has elapsed. Useful for event pages. */
   export const onAlarm: AlarmEvent
@@ -324,7 +331,7 @@ export namespace Browser {
    *
    * created, or failed to be created. If failed, runtime.lastError will be set.
    */
-  export const openTab: jest.MockedFunction<typeof chrome.browser.openTab>
+  export const openTab: MockedFunction<typeof chrome.browser.openTab>
 }
 
 ////////////////////
@@ -389,33 +396,33 @@ export namespace Bookmarks {
   }
 
   export interface BookmarkRemovedEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (id: string, removeInfo: BookmarkRemoveInfo) => void
     > {}
 
   export interface BookmarkImportEndedEvent
-    extends JestChromeNamespace.events.Event<() => void> {}
+    extends VitestChromeNamespace.events.Event<() => void> {}
 
   export interface BookmarkMovedEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (id: string, moveInfo: BookmarkMoveInfo) => void
     > {}
 
   export interface BookmarkImportBeganEvent
-    extends JestChromeNamespace.events.Event<() => void> {}
+    extends VitestChromeNamespace.events.Event<() => void> {}
 
   export interface BookmarkChangedEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (id: string, changeInfo: BookmarkChangeInfo) => void
     > {}
 
   export interface BookmarkCreatedEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (id: string, bookmark: BookmarkTreeNode) => void
     > {}
 
   export interface BookmarkChildrenReordered
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (id: string, reorderInfo: BookmarkReorderInfo) => void
     > {}
 
@@ -457,7 +464,7 @@ export namespace Bookmarks {
    *
    * function(array of BookmarkTreeNode results) {...};
    */
-  export const search: jest.MockedFunction<typeof chrome.bookmarks.search>
+  export const search: MockedFunction<typeof chrome.bookmarks.search>
 
   /**
    * Retrieves the entire Bookmarks hierarchy.
@@ -466,7 +473,7 @@ export namespace Bookmarks {
    *
    * function(array of BookmarkTreeNode results) {...};
    */
-  export const getTree: jest.MockedFunction<typeof chrome.bookmarks.getTree>
+  export const getTree: MockedFunction<typeof chrome.bookmarks.getTree>
   /**
    * Retrieves the recently added bookmarks.
    *
@@ -476,7 +483,7 @@ export namespace Bookmarks {
    *
    * function(array of BookmarkTreeNode results) {...};
    */
-  export const getRecent: jest.MockedFunction<typeof chrome.bookmarks.getRecent>
+  export const getRecent: MockedFunction<typeof chrome.bookmarks.getRecent>
   /**
    * Retrieves the specified BookmarkTreeNode.
    *
@@ -486,7 +493,7 @@ export namespace Bookmarks {
    *
    * function(array of BookmarkTreeNode results) {...};
    */
-  export const get: jest.MockedFunction<typeof chrome.bookmarks.get>
+  export const get: MockedFunction<typeof chrome.bookmarks.get>
 
   /**
    * Creates a bookmark or folder under the specified parentId. If url is NULL or missing, it will be a folder.
@@ -495,7 +502,7 @@ export namespace Bookmarks {
    *
    * function( BookmarkTreeNode result) {...};
    */
-  export const create: jest.MockedFunction<typeof chrome.bookmarks.create>
+  export const create: MockedFunction<typeof chrome.bookmarks.create>
   /**
    * Moves the specified BookmarkTreeNode to the provided location.
    *
@@ -503,7 +510,7 @@ export namespace Bookmarks {
    *
    * function( BookmarkTreeNode result) {...};
    */
-  export const move: jest.MockedFunction<typeof chrome.bookmarks.move>
+  export const move: MockedFunction<typeof chrome.bookmarks.move>
   /**
    * Updates the properties of a bookmark or folder. Specify only the properties that you want to change; unspecified properties will be left unchanged. Note: Currently, only 'title' and 'url' are supported.
    *
@@ -511,7 +518,7 @@ export namespace Bookmarks {
    *
    * function( BookmarkTreeNode result) {...};
    */
-  export const update: jest.MockedFunction<typeof chrome.bookmarks.update>
+  export const update: MockedFunction<typeof chrome.bookmarks.update>
   /**
    * Removes a bookmark or an empty bookmark folder.
    *
@@ -519,7 +526,7 @@ export namespace Bookmarks {
    *
    * function() {...};
    */
-  export const remove: jest.MockedFunction<typeof chrome.bookmarks.remove>
+  export const remove: MockedFunction<typeof chrome.bookmarks.remove>
   /**
    * Retrieves the children of the specified BookmarkTreeNode id.
    *
@@ -527,7 +534,7 @@ export namespace Bookmarks {
    *
    * function(array of BookmarkTreeNode results) {...};
    */
-  export const getChildren: jest.MockedFunction<typeof chrome.bookmarks.getChildren>
+  export const getChildren: MockedFunction<typeof chrome.bookmarks.getChildren>
   /**
    * Since Chrome 14.
    *
@@ -539,7 +546,7 @@ export namespace Bookmarks {
    *
    * function(array of BookmarkTreeNode results) {...};
    */
-  export const getSubTree: jest.MockedFunction<typeof chrome.bookmarks.getSubTree>
+  export const getSubTree: MockedFunction<typeof chrome.bookmarks.getSubTree>
   /**
    * Recursively removes a bookmark folder.
    *
@@ -547,7 +554,7 @@ export namespace Bookmarks {
    *
    * function() {...};
    */
-  export const removeTree: jest.MockedFunction<typeof chrome.bookmarks.removeTree>
+  export const removeTree: MockedFunction<typeof chrome.bookmarks.removeTree>
 
   /** Fired when a bookmark or folder is removed. When a folder is removed recursively, a single notification is fired for the folder, and none for its contents. */
   export const onRemoved: BookmarkRemovedEvent
@@ -621,8 +628,8 @@ export namespace BrowserAction {
   }
 
   export interface BrowserClickedEvent
-    extends JestChromeNamespace.events.Event<
-      (tab: JestChromeNamespace.tabs.Tab) => void
+    extends VitestChromeNamespace.events.Event<
+      (tab: VitestChromeNamespace.tabs.Tab) => void
     > {}
 
   /**
@@ -634,25 +641,25 @@ export namespace BrowserAction {
    *
    * @param callback Supported since Chrome 67
    */
-  export const enable: jest.MockedFunction<typeof chrome.browserAction.enable>
+  export const enable: MockedFunction<typeof chrome.browserAction.enable>
   /**
    * Sets the background color for the badge.
    *
    * @param callback Supported since Chrome 67
    */
-  export const setBadgeBackgroundColor: jest.MockedFunction<typeof chrome.browserAction.setBadgeBackgroundColor>
+  export const setBadgeBackgroundColor: MockedFunction<typeof chrome.browserAction.setBadgeBackgroundColor>
   /**
    * Sets the badge text for the browser action. The badge is displayed on top of the icon.
    *
    * @param callback Supported since Chrome 67
    */
-  export const setBadgeText: jest.MockedFunction<typeof chrome.browserAction.setBadgeText>
+  export const setBadgeText: MockedFunction<typeof chrome.browserAction.setBadgeText>
   /**
    * Sets the title of the browser action. This shows up in the tooltip.
    *
    * @param callback Supported since Chrome 67
    */
-  export const setTitle: jest.MockedFunction<typeof chrome.browserAction.setTitle>
+  export const setTitle: MockedFunction<typeof chrome.browserAction.setTitle>
   /**
    * Since Chrome 19.
    *
@@ -660,14 +667,14 @@ export namespace BrowserAction {
    *
    * @param callback Supported since Chrome 67
    */
-  export const getBadgeText: jest.MockedFunction<typeof chrome.browserAction.getBadgeText>
+  export const getBadgeText: MockedFunction<typeof chrome.browserAction.getBadgeText>
   /**
    * Sets the html document to be opened as a popup when the user clicks on the browser action's icon.
    *
    * @param callback Supported since Chrome 67
    */
 
-  export const setPopup: jest.MockedFunction<typeof chrome.browserAction.setPopup>
+  export const setPopup: MockedFunction<typeof chrome.browserAction.setPopup>
   /**
    * Since Chrome 22.
    *
@@ -677,7 +684,7 @@ export namespace BrowserAction {
    *
    * @param callback Supported since Chrome 67
    */
-  export const disable: jest.MockedFunction<typeof chrome.browserAction.disable>
+  export const disable: MockedFunction<typeof chrome.browserAction.disable>
   /**
    * Since Chrome 19.
    *
@@ -687,7 +694,7 @@ export namespace BrowserAction {
    *
    * function(string result) {...};
    */
-  export const getTitle: jest.MockedFunction<typeof chrome.browserAction.getTitle>
+  export const getTitle: MockedFunction<typeof chrome.browserAction.getTitle>
   /**
    * Since Chrome 19.
    *
@@ -697,7 +704,7 @@ export namespace BrowserAction {
    *
    * function( ColorArray result) {...};
    */
-  export const getBadgeBackgroundColor: jest.MockedFunction<typeof chrome.browserAction.getBadgeBackgroundColor>
+  export const getBadgeBackgroundColor: MockedFunction<typeof chrome.browserAction.getBadgeBackgroundColor>
   /**
    * Since Chrome 19.
    *
@@ -707,7 +714,7 @@ export namespace BrowserAction {
    *
    * function(string result) {...};
    */
-  export const getPopup: jest.MockedFunction<typeof chrome.browserAction.getPopup>
+  export const getPopup: MockedFunction<typeof chrome.browserAction.getPopup>
   /**
    * Sets the icon for the browser action. The icon can be specified either as the path to an image file or as the pixel data from a canvas element, or as dictionary of either one of those. Either the path or the imageData property must be specified.
    *
@@ -715,7 +722,7 @@ export namespace BrowserAction {
    *
    * function() {...};
    */
-  export const setIcon: jest.MockedFunction<typeof chrome.browserAction.setIcon>
+  export const setIcon: MockedFunction<typeof chrome.browserAction.setIcon>
 
   /**  Fired when a browser action icon is clicked. This event will not fire if the browser action has a popup. */
   export const onClicked: BrowserClickedEvent
@@ -814,7 +821,7 @@ export namespace BrowsingData {
    *
    * function(object result) {...};
    */
-  export const settings: jest.MockedFunction<typeof chrome.browsingData.settings>
+  export const settings: MockedFunction<typeof chrome.browsingData.settings>
   /**
    * Clears plugins' data.
    *
@@ -824,7 +831,7 @@ export namespace BrowsingData {
    *
    * function() {...};
    */
-  export const removePluginData: jest.MockedFunction<typeof chrome.browsingData.removePluginData>
+  export const removePluginData: MockedFunction<typeof chrome.browsingData.removePluginData>
   /**
    * Clears the browser's stored form data (autofill).
    *
@@ -834,7 +841,7 @@ export namespace BrowsingData {
    *
    * function() {...};
    */
-  export const removeFormData: jest.MockedFunction<typeof chrome.browsingData.removeFormData>
+  export const removeFormData: MockedFunction<typeof chrome.browsingData.removeFormData>
   /**
    * Clears websites' file system data.
    *
@@ -844,7 +851,7 @@ export namespace BrowsingData {
    *
    * function() {...};
    */
-  export const removeFileSystems: jest.MockedFunction<typeof chrome.browsingData.removeFileSystems>
+  export const removeFileSystems: MockedFunction<typeof chrome.browsingData.removeFileSystems>
   /**
    * Clears various types of browsing data stored in a user's profile.
    *
@@ -856,7 +863,7 @@ export namespace BrowsingData {
    *
    * function() {...};
    */
-  export const remove: jest.MockedFunction<typeof chrome.browsingData.remove>
+  export const remove: MockedFunction<typeof chrome.browsingData.remove>
   /**
    * Clears the browser's stored passwords.
    *
@@ -866,7 +873,7 @@ export namespace BrowsingData {
    *
    * function() {...};
    */
-  export const removePasswords: jest.MockedFunction<typeof chrome.browsingData.removePasswords>
+  export const removePasswords: MockedFunction<typeof chrome.browsingData.removePasswords>
   /**
    * Clears the browser's cookies and server-bound certificates modified within a particular timeframe.
    *
@@ -876,7 +883,7 @@ export namespace BrowsingData {
    *
    * function() {...};
    */
-  export const removeCookies: jest.MockedFunction<typeof chrome.browsingData.removeCookies>
+  export const removeCookies: MockedFunction<typeof chrome.browsingData.removeCookies>
   /**
    * Clears websites' WebSQL data.
    *
@@ -886,7 +893,7 @@ export namespace BrowsingData {
    *
    * function() {...};
    */
-  export const removeWebSQL: jest.MockedFunction<typeof chrome.browsingData.removeWebSQL>
+  export const removeWebSQL: MockedFunction<typeof chrome.browsingData.removeWebSQL>
   /**
    * Clears websites' appcache data.
    *
@@ -896,7 +903,7 @@ export namespace BrowsingData {
    *
    * function() {...};
    */
-  export const removeAppcache: jest.MockedFunction<typeof chrome.browsingData.removeAppcache>
+  export const removeAppcache: MockedFunction<typeof chrome.browsingData.removeAppcache>
   /**
    * Clears the browser's list of downloaded files (not the downloaded files themselves).
    *
@@ -906,7 +913,7 @@ export namespace BrowsingData {
    *
    * function() {...};
    */
-  export const removeDownloads: jest.MockedFunction<typeof chrome.browsingData.removeDownloads>
+  export const removeDownloads: MockedFunction<typeof chrome.browsingData.removeDownloads>
   /**
    * Clears websites' local storage data.
    *
@@ -916,7 +923,7 @@ export namespace BrowsingData {
    *
    * function() {...};
    */
-  export const removeLocalStorage: jest.MockedFunction<typeof chrome.browsingData.removeLocalStorage>
+  export const removeLocalStorage: MockedFunction<typeof chrome.browsingData.removeLocalStorage>
   /**
    * Clears the browser's cache.
    *
@@ -926,7 +933,7 @@ export namespace BrowsingData {
    *
    * function() {...};
    */
-  export const removeCache: jest.MockedFunction<typeof chrome.browsingData.removeCache>
+  export const removeCache: MockedFunction<typeof chrome.browsingData.removeCache>
   /**
    * Clears the browser's history.
    *
@@ -936,7 +943,7 @@ export namespace BrowsingData {
    *
    * function() {...};
    */
-  export const removeHistory: jest.MockedFunction<typeof chrome.browsingData.removeHistory>
+  export const removeHistory: MockedFunction<typeof chrome.browsingData.removeHistory>
   /**
    * Clears websites' IndexedDB data.
    *
@@ -946,7 +953,7 @@ export namespace BrowsingData {
    *
    * function() {...};
    */
-  export const removeIndexedDB: jest.MockedFunction<typeof chrome.browsingData.removeIndexedDB>
+  export const removeIndexedDB: MockedFunction<typeof chrome.browsingData.removeIndexedDB>
 }
 
 ////////////////////
@@ -970,7 +977,9 @@ export namespace Commands {
   }
 
   export interface CommandEvent
-    extends JestChromeNamespace.events.Event<(command: string) => void> {}
+    extends VitestChromeNamespace.events.Event<
+      (command: string) => void
+    > {}
 
   /**
    * Returns all the registered extension commands for this extension and their shortcut (if active).
@@ -981,7 +990,7 @@ export namespace Commands {
    *
    * function(array of Command commands) {...};
    */
-  export const getAll: jest.MockedFunction<typeof chrome.commands.getAll>
+  export const getAll: MockedFunction<typeof chrome.commands.getAll>
 
   /**  Fired when a registered command is activated using a keyboard shortcut. */
   export const onCommand: CommandEvent
@@ -1558,7 +1567,7 @@ export namespace ContextMenus {
      */
     onclick?: (
       info: OnClickData,
-      tab: JestChromeNamespace.tabs.Tab,
+      tab: VitestChromeNamespace.tabs.Tab,
     ) => void
     /** Optional. The ID of a parent menu item; this makes the item a child of a previously added item.  */
     parentId?: any
@@ -1597,8 +1606,11 @@ export namespace ContextMenus {
   }
 
   export interface MenuClickedEvent
-    extends JestChromeNamespace.events.Event<
-      (info: OnClickData, tab?: JestChromeNamespace.tabs.Tab) => void
+    extends VitestChromeNamespace.events.Event<
+      (
+        info: OnClickData,
+        tab?: VitestChromeNamespace.tabs.Tab,
+      ) => void
     > {}
 
   /**
@@ -1617,7 +1629,7 @@ export namespace ContextMenus {
    *
    * function() {...};
    */
-  export const removeAll: jest.MockedFunction<typeof chrome.contextMenus.removeAll>
+  export const removeAll: MockedFunction<typeof chrome.contextMenus.removeAll>
   /**
    * Creates a new context menu item. Note that if an error occurs during creation, you may not find out until the creation callback fires (the details will be in JestChrome.runtime.lastError).
    *
@@ -1627,7 +1639,7 @@ export namespace ContextMenus {
    *
    * function() {...};
    */
-  export const create: jest.MockedFunction<typeof chrome.contextMenus.create>
+  export const create: MockedFunction<typeof chrome.contextMenus.create>
   /**
    * Updates a previously created context menu item.
    *
@@ -1641,7 +1653,7 @@ export namespace ContextMenus {
    *
    * function() {...};
    */
-  export const update: jest.MockedFunction<typeof chrome.contextMenus.update>
+  export const update: MockedFunction<typeof chrome.contextMenus.update>
 
   /**
    * Removes a context menu item.
@@ -1654,7 +1666,7 @@ export namespace ContextMenus {
    *
    * function() {...};
    */
-  export const remove: jest.MockedFunction<typeof chrome.contextMenus.remove>
+  export const remove: MockedFunction<typeof chrome.contextMenus.remove>
 
   /**
    * Since Chrome 21.
@@ -1765,7 +1777,7 @@ export namespace Cookies {
   }
 
   export interface CookieChangedEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (changeInfo: CookieChangeInfo) => void
     > {}
 
@@ -1778,7 +1790,7 @@ export namespace Cookies {
    *
    * Parameter cookieStores: All the existing cookie stores.
    */
-  export const getAllCookieStores: jest.MockedFunction<typeof chrome.cookies.getAllCookieStores>
+  export const getAllCookieStores: MockedFunction<typeof chrome.cookies.getAllCookieStores>
   /**
    * Retrieves all cookies from a single cookie store that match the given information. The cookies returned will be sorted, with those with the longest path first. If multiple cookies have the same path length, those with the earliest creation time will be first.
    *
@@ -1790,7 +1802,7 @@ export namespace Cookies {
    *
    * Parameter cookies: All the existing, unexpired cookies that match the given cookie info.
    */
-  export const getAll: jest.MockedFunction<typeof chrome.cookies.getAll>
+  export const getAll: MockedFunction<typeof chrome.cookies.getAll>
   /**
    * Sets a cookie with the given cookie data; may overwrite equivalent cookies if they exist.
    *
@@ -1802,7 +1814,7 @@ export namespace Cookies {
    *
    * Optional parameter cookie: Contains details about the cookie that's been set. If setting failed for any reason, this will be "null", and "JestChrome.runtime.lastError" will be set.
    */
-  export const set: jest.MockedFunction<typeof chrome.cookies.set>
+  export const set: MockedFunction<typeof chrome.cookies.set>
   /**
    * Deletes a cookie by name.
    *
@@ -1812,7 +1824,7 @@ export namespace Cookies {
    *
    * function(object details) {...};
    */
-  export const remove: jest.MockedFunction<typeof chrome.cookies.remove>
+  export const remove: MockedFunction<typeof chrome.cookies.remove>
   /**
    * Retrieves information about a single cookie. If more than one cookie of the same name exists for the given URL, the one with the longest path will be returned. For cookies with the same path length, the cookie with the earliest creation time will be returned.
    *
@@ -1824,7 +1836,7 @@ export namespace Cookies {
    *
    * Parameter cookie: Contains details about the cookie. This parameter is null if no such cookie was found.
    */
-  export const get: jest.MockedFunction<typeof chrome.cookies.get>
+  export const get: MockedFunction<typeof chrome.cookies.get>
 
   /** Fired when a cookie is set or removed. As a special case, note that updating a cookie's properties is implemented as a two step process: the cookie to be updated is first removed entirely, generating a notification with "cause" of "overwrite" . Afterwards, a new cookie is written with the updated values, generating a second notification with "cause" "explicit". */
   export const onChanged: CookieChangedEvent
@@ -1900,12 +1912,12 @@ export namespace Debugger {
   }
 
   export interface DebuggerDetachedEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (source: Debuggee, reason: string) => void
     > {}
 
   export interface DebuggerEventEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (
         source: Debuggee,
         method: string,
@@ -1926,7 +1938,7 @@ export namespace Debugger {
    *
    * function() {...};
    */
-  export const attach: jest.MockedFunction<typeof chrome.debugger.attach>
+  export const attach: MockedFunction<typeof chrome.debugger.attach>
   /**
    * Detaches debugger from the given target.
    *
@@ -1938,7 +1950,7 @@ export namespace Debugger {
    *
    * function() {...};
    */
-  export const detach: jest.MockedFunction<typeof chrome.debugger.detach>
+  export const detach: MockedFunction<typeof chrome.debugger.detach>
   /**
    * Sends given command to the debugging target.
    *
@@ -1956,7 +1968,7 @@ export namespace Debugger {
    *
    * function(object result) {...};
    */
-  export const sendCommand: jest.MockedFunction<typeof chrome.debugger.sendCommand>
+  export const sendCommand: MockedFunction<typeof chrome.debugger.sendCommand>
   /**
    * Since Chrome 28.
    *
@@ -1968,7 +1980,7 @@ export namespace Debugger {
    *
    * Parameter result: Array of TargetInfo objects corresponding to the available debug targets.
    */
-  export const getTargets: jest.MockedFunction<typeof chrome.debugger.getTargets>
+  export const getTargets: MockedFunction<typeof chrome.debugger.getTargets>
 
   /** Fired when browser terminates debugging session for the tab. This happens when either the tab is being closed or Chrome DevTools is being invoked for the attached tab. */
   export const onDetach: DebuggerDetachedEvent
@@ -2055,7 +2067,7 @@ export namespace DeclarativeContent {
 
   /** Provides the Declarative Event API consisting of addRules, removeRules, and getRules. */
   export interface PageChangedEvent
-    extends JestChromeNamespace.events.Event<() => void> {}
+    extends VitestChromeNamespace.events.Event<() => void> {}
 
   export const onPageChanged: PageChangedEvent
 }
@@ -2091,7 +2103,7 @@ export namespace DeclarativeWebRequest {
 
   export interface RequestMatcher {
     contentType?: string[]
-    url?: JestChromeNamespace.events.UrlFilter
+    url?: VitestChromeNamespace.events.UrlFilter
     excludeContentType?: string[]
     excludeResponseHeader?: HeaderFilter[]
     resourceType?: string
@@ -2165,7 +2177,7 @@ export namespace DeclarativeWebRequest {
   }
 
   export interface RequestedEvent
-    extends JestChromeNamespace.events.DeclarativeContentEvent<
+    extends VitestChromeNamespace.events.DeclarativeContentEvent<
       Function
     > {}
 
@@ -2194,14 +2206,14 @@ export namespace DesktopCapture {
    *
    * Parameter streamId: An opaque string that can be passed to getUserMedia() API to generate media stream that corresponds to the source selected by the user. If user didn't select any source (i.e. canceled the prompt) then the callback is called with an empty streamId. The created streamId can be used only once and expires after a few seconds when it is not used.
    */
-  export const chooseDesktopMedia: jest.MockedFunction<typeof chrome.desktopCapture.chooseDesktopMedia>
+  export const chooseDesktopMedia: MockedFunction<typeof chrome.desktopCapture.chooseDesktopMedia>
 
   /**
    * Hides desktop media picker dialog shown by chooseDesktopMedia().
    *
    * @param desktopMediaRequestId Id returned by chooseDesktopMedia()
    */
-  export const cancelChooseDesktopMedia: jest.MockedFunction<typeof chrome.desktopCapture.cancelChooseDesktopMedia>
+  export const cancelChooseDesktopMedia: MockedFunction<typeof chrome.desktopCapture.cancelChooseDesktopMedia>
 }
 
 ////////////////////
@@ -2288,12 +2300,12 @@ export namespace Devtools.inspectedWindow {
   }
 
   export interface ResourceAddedEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (resource: Resource) => void
     > {}
 
   export interface ResourceContentCommittedEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (resource: Resource, content: string) => void
     > {}
 
@@ -2301,7 +2313,7 @@ export namespace Devtools.inspectedWindow {
   export const tabId: number
 
   /** Reloads the inspected page. */
-  export const reload: jest.MockedFunction<typeof chrome.devtools.inspectedWindow.reload>
+  export const reload: MockedFunction<typeof chrome.devtools.inspectedWindow.reload>
 
   // /**
   //  * Evaluates a JavaScript expression in the context of the main frame of the inspected page. The expression must evaluate to a JSON-compliant object, otherwise an exception is thrown. The eval function can report either a DevTools-side error or a JavaScript exception that occurs during evaluation. In either case, the result parameter of the callback is undefined. In the case of a DevTools-side error, the isException parameter is non-null and has isError set to true and code set to an error code. In the case of a JavaScript error, isException is set to true and value is set to the string value of thrown object.
@@ -2322,7 +2334,7 @@ export namespace Devtools.inspectedWindow {
   //  */
   // // eslint-disable-next-line
   // // @ts-ignore
-  // export const eval: jest.MockedFunction<typeof chrome.devtools.inspectedWindow.eval>
+  // export const eval: MockedFunction<typeof chrome.devtools.inspectedWindow.eval>
 
   /**
    * Retrieves the list of resources from the inspected page.
@@ -2333,7 +2345,7 @@ export namespace Devtools.inspectedWindow {
    *
    * function(array of Resource resources) {...};
    */
-  export const getResources: jest.MockedFunction<typeof chrome.devtools.inspectedWindow.getResources>
+  export const getResources: MockedFunction<typeof chrome.devtools.inspectedWindow.getResources>
 
   /** Fired when a new resource is added to the inspected page. */
   export const onResourceAdded: ResourceAddedEvent
@@ -2380,12 +2392,14 @@ export namespace Devtools.network {
   }
 
   export interface RequestFinishedEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (request: Request) => void
     > {}
 
   export interface NavigatedEvent
-    extends JestChromeNamespace.events.Event<(url: string) => void> {}
+    extends VitestChromeNamespace.events.Event<
+      (url: string) => void
+    > {}
 
   /**
    * Returns HAR log that contains all known network requests.
@@ -2398,7 +2412,7 @@ export namespace Devtools.network {
    *
    * Parameter harLog: A HAR log. See HAR specification for details.
    */
-  export const getHAR: jest.MockedFunction<typeof chrome.devtools.network.getHAR>
+  export const getHAR: MockedFunction<typeof chrome.devtools.network.getHAR>
 
   /** Fired when a network request is finished and all request data are available. */
   export const onRequestFinished: RequestFinishedEvent
@@ -2416,13 +2430,15 @@ export namespace Devtools.network {
  */
 export namespace Devtools.panels {
   export interface PanelShownEvent
-    extends JestChromeNamespace.events.Event<(window: Window) => void> {}
+    extends VitestChromeNamespace.events.Event<
+      (window: Window) => void
+    > {}
 
   export interface PanelHiddenEvent
-    extends JestChromeNamespace.events.Event<() => void> {}
+    extends VitestChromeNamespace.events.Event<() => void> {}
 
   export interface PanelSearchEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (action: string, queryString?: string) => void
     > {}
 
@@ -2451,7 +2467,7 @@ export namespace Devtools.panels {
   }
 
   export interface ButtonClickedEvent
-    extends JestChromeNamespace.events.Event<() => void> {}
+    extends VitestChromeNamespace.events.Event<() => void> {}
 
   /** A button created by the extension. */
   export interface Button {
@@ -2474,7 +2490,7 @@ export namespace Devtools.panels {
   }
 
   export interface SelectionChangedEvent
-    extends JestChromeNamespace.events.Event<() => void> {}
+    extends VitestChromeNamespace.events.Event<() => void> {}
 
   /** Represents the Elements panel. */
   export interface ElementsPanel {
@@ -2527,12 +2543,12 @@ export namespace Devtools.panels {
   }
 
   export interface ExtensionSidebarPaneShownEvent
-    extends JestChromeNamespace.events.Event<
-      (window: JestChromeNamespace.windows.Window) => void
+    extends VitestChromeNamespace.events.Event<
+      (window: VitestChromeNamespace.windows.Window) => void
     > {}
 
   export interface ExtensionSidebarPaneHiddenEvent
-    extends JestChromeNamespace.events.Event<() => void> {}
+    extends VitestChromeNamespace.events.Event<() => void> {}
 
   /** A sidebar created by the extension. */
   export interface ExtensionSidebarPane {
@@ -2646,7 +2662,7 @@ export namespace Devtools.panels {
    *
    * Parameter panel: An ExtensionPanel object representing the created panel.
    */
-  export const create: jest.MockedFunction<typeof chrome.devtools.panels.create>
+  export const create: MockedFunction<typeof chrome.devtools.panels.create>
   /**
    * Specifies the function to be called when the user clicks a resource link in the Developer Tools window. To unset the handler, either call the method with no parameters or pass null as the parameter.
    *
@@ -2658,7 +2674,7 @@ export namespace Devtools.panels {
    *
    * Parameter resource: A devtools.inspectedWindow.Resource object for the resource that was clicked.
    */
-  export const setOpenResourceHandler: jest.MockedFunction<typeof chrome.devtools.panels.setOpenResourceHandler>
+  export const setOpenResourceHandler: MockedFunction<typeof chrome.devtools.panels.setOpenResourceHandler>
   /**
    * Since Chrome 38.
    *
@@ -2674,7 +2690,7 @@ export namespace Devtools.panels {
    *
    * function() {...};
    */
-  export const openResource: jest.MockedFunction<typeof chrome.devtools.panels.openResource>
+  export const openResource: MockedFunction<typeof chrome.devtools.panels.openResource>
 }
 
 ////////////////////
@@ -2715,7 +2731,7 @@ export namespace DocumentScan {
    *
    * function(object result) {...};
    */
-  export const scan: jest.MockedFunction<typeof chrome.documentScan.scan>
+  export const scan: MockedFunction<typeof chrome.documentScan.scan>
 }
 
 ////////////////////
@@ -2922,22 +2938,22 @@ export namespace Downloads {
   }
 
   export interface DownloadChangedEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (downloadDelta: DownloadDelta) => void
     > {}
 
   export interface DownloadCreatedEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (downloadItem: DownloadItem) => void
     > {}
 
   export interface DownloadErasedEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (downloadId: number) => void
     > {}
 
   export interface DownloadDeterminingFilenameEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (
         downloadItem: DownloadItem,
         suggest: (
@@ -2953,7 +2969,7 @@ export namespace Downloads {
    *
    * function(array of DownloadItem results) {...};
    */
-  export const search: jest.MockedFunction<typeof chrome.downloads.search>
+  export const search: MockedFunction<typeof chrome.downloads.search>
   /**
    * Pause the download. If the request was successful the download is in a paused state. Otherwise runtime.lastError contains an error message. The request will fail if the download is not active.
    *
@@ -2965,7 +2981,7 @@ export namespace Downloads {
    *
    * function() {...};
    */
-  export const pause: jest.MockedFunction<typeof chrome.downloads.pause>
+  export const pause: MockedFunction<typeof chrome.downloads.pause>
   /**
    * Retrieve an icon for the specified download. For new downloads, file icons are available after the onCreated event has been received. The image returned by this function while a download is in progress may be different from the image returned after the download is complete. Icon retrieval is done by querying the underlying operating system or toolkit depending on the platform. The icon that is returned will therefore depend on a number of factors including state of the download, platform, registered file types and visual theme. If a file icon cannot be determined, runtime.lastError will contain an error message.
    *
@@ -2977,7 +2993,7 @@ export namespace Downloads {
    *
    * function(string iconURL) {...};
    */
-  export const getFileIcon: jest.MockedFunction<typeof chrome.downloads.getFileIcon>
+  export const getFileIcon: MockedFunction<typeof chrome.downloads.getFileIcon>
 
   /**
    * Resume a paused download. If the request was successful the download is in progress and unpaused. Otherwise runtime.lastError contains an error message. The request will fail if the download is not active.
@@ -2990,7 +3006,7 @@ export namespace Downloads {
    *
    * function() {...};
    */
-  export const resume: jest.MockedFunction<typeof chrome.downloads.resume>
+  export const resume: MockedFunction<typeof chrome.downloads.resume>
   /**
    * Cancel a download. When callback is run, the download is cancelled, completed, interrupted or doesn't exist anymore.
    *
@@ -3002,7 +3018,7 @@ export namespace Downloads {
    *
    * function() {...};
    */
-  export const cancel: jest.MockedFunction<typeof chrome.downloads.cancel>
+  export const cancel: MockedFunction<typeof chrome.downloads.cancel>
   /**
    * Download a URL. If the URL uses the HTTP[S] protocol, then the request will include all cookies currently set for its hostname. If both filename and saveAs are specified, then the Save As dialog will be displayed, pre-populated with the specified filename. If the download started successfully, callback will be called with the new DownloadItem's downloadId. If there was an error starting the download, then callback will be called with downloadId=undefined and runtime.lastError will contain a descriptive string. The error strings are not guaranteed to remain backwards compatible between releases. Extensions must not parse it.
    *
@@ -3014,22 +3030,22 @@ export namespace Downloads {
    *
    * function(integer downloadId) {...};
    */
-  export const download: jest.MockedFunction<typeof chrome.downloads.download>
+  export const download: MockedFunction<typeof chrome.downloads.download>
   /**
    * Open the downloaded file now if the DownloadItem is complete; otherwise returns an error through runtime.lastError. Requires the "downloads.open" permission in addition to the "downloads" permission. An onChanged event will fire when the item is opened for the first time.
    *
    * @param downloadId The identifier for the downloaded file.
    */
-  export const open: jest.MockedFunction<typeof chrome.downloads.open>
+  export const open: MockedFunction<typeof chrome.downloads.open>
   /**
    * Show the downloaded file in its folder in a file manager.
    *
    * @param downloadId The identifier for the downloaded file.
    */
-  export const show: jest.MockedFunction<typeof chrome.downloads.show>
+  export const show: MockedFunction<typeof chrome.downloads.show>
 
   /** Show the default Downloads folder in a file manager. */
-  export const showDefaultFolder: jest.MockedFunction<typeof chrome.downloads.showDefaultFolder>
+  export const showDefaultFolder: MockedFunction<typeof chrome.downloads.showDefaultFolder>
 
   /**
    * Erase matching DownloadItem from history without deleting the downloaded file. An onErased event will fire for each DownloadItem that matches query, then callback will be called.
@@ -3038,7 +3054,7 @@ export namespace Downloads {
    *
    * function(array of integer erasedIds) {...};
    */
-  export const erase: jest.MockedFunction<typeof chrome.downloads.erase>
+  export const erase: MockedFunction<typeof chrome.downloads.erase>
   /**
    * Remove the downloaded file if it exists and the DownloadItem is complete; otherwise return an error through runtime.lastError.
    *
@@ -3046,7 +3062,7 @@ export namespace Downloads {
    *
    * function() {...};
    */
-  export const removeFile: jest.MockedFunction<typeof chrome.downloads.removeFile>
+  export const removeFile: MockedFunction<typeof chrome.downloads.removeFile>
   /**
    * Prompt the user to accept a dangerous download. Can only be called from a visible context (tab, window, or page/browser action popup). Does not automatically accept dangerous downloads. If the download is accepted, then an onChanged event will fire, otherwise nothing will happen. When all the data is fetched into a temporary file and either the download is not dangerous or the danger has been accepted, then the temporary file is renamed to the target filename, the |state| changes to 'complete', and onChanged fires.
    *
@@ -3058,11 +3074,11 @@ export namespace Downloads {
    *
    * function() {...};
    */
-  export const acceptDanger: jest.MockedFunction<typeof chrome.downloads.acceptDanger>
+  export const acceptDanger: MockedFunction<typeof chrome.downloads.acceptDanger>
   /** Initiate dragging the downloaded file to another application. Call in a javascript ondragstart handler. */
-  export const drag: jest.MockedFunction<typeof chrome.downloads.drag>
+  export const drag: MockedFunction<typeof chrome.downloads.drag>
   /** Enable or disable the gray shelf at the bottom of every window associated with the current browser profile. The shelf will be disabled as long as at least one extension has disabled it. Enabling the shelf while at least one other extension has disabled it will return an error through runtime.lastError. Requires the "downloads.shelf" permission in addition to the "downloads" permission. */
-  export const setShelfEnabled: jest.MockedFunction<typeof chrome.downloads.setShelfEnabled>
+  export const setShelfEnabled: MockedFunction<typeof chrome.downloads.setShelfEnabled>
 
   /** When any of a DownloadItem's properties except bytesReceived and estimatedEndTime changes, this event fires with the downloadId and an object containing the properties that changed. */
   export const onChanged: DownloadChangedEvent
@@ -3117,7 +3133,7 @@ export namespace Enterprise.platformKeys {
    *
    * Parameter tokens: The list of available tokens.
    */
-  export const getTokens: jest.MockedFunction<typeof chrome.enterprise.platformKeys.getTokens>
+  export const getTokens: MockedFunction<typeof chrome.enterprise.platformKeys.getTokens>
   /**
    * Returns the list of all client certificates available from the given token. Can be used to check for the existence and expiration of client certificates that are usable for a certain authentication.
    *
@@ -3131,7 +3147,7 @@ export namespace Enterprise.platformKeys {
    *
    * Parameter certificates: The list of certificates, each in DER encoding of a X.509 certificate.
    */
-  export const getCertificates: jest.MockedFunction<typeof chrome.enterprise.platformKeys.getCertificates>
+  export const getCertificates: MockedFunction<typeof chrome.enterprise.platformKeys.getCertificates>
   /**
    * Imports certificate to the given token if the certified key is already stored in this token. After a successful certification request, this function should be used to store the obtained certificate and to make it available to the operating system and browser for authentication.
    *
@@ -3145,7 +3161,7 @@ export namespace Enterprise.platformKeys {
    *
    * function() {...};
    */
-  export const importCertificate: jest.MockedFunction<typeof chrome.enterprise.platformKeys.importCertificate>
+  export const importCertificate: MockedFunction<typeof chrome.enterprise.platformKeys.importCertificate>
   /**
    * Removes certificate from the given token if present. Should be used to remove obsolete certificates so that they are not considered during authentication and do not clutter the certificate choice. Should be used to free storage in the certificate store.
    *
@@ -3159,7 +3175,7 @@ export namespace Enterprise.platformKeys {
    *
    * function() {...};
    */
-  export const removeCertificate: jest.MockedFunction<typeof chrome.enterprise.platformKeys.removeCertificate>
+  export const removeCertificate: MockedFunction<typeof chrome.enterprise.platformKeys.removeCertificate>
 }
 
 ////////////////////
@@ -3188,7 +3204,7 @@ export namespace Enterprise.deviceAttributes {
    *
    * function(string deviceId) {...};
    */
-  export const getDirectoryDeviceId: jest.MockedFunction<typeof chrome.enterprise.deviceAttributes.getDirectoryDeviceId>
+  export const getDirectoryDeviceId: MockedFunction<typeof chrome.enterprise.deviceAttributes.getDirectoryDeviceId>
   /**
    * @since Chrome 66.
    *
@@ -3206,7 +3222,7 @@ export namespace Enterprise.deviceAttributes {
    *
    * @param callback Called with the serial number of the device.
    */
-  export const getDeviceSerialNumber: jest.MockedFunction<typeof chrome.enterprise.deviceAttributes.getDeviceSerialNumber>
+  export const getDeviceSerialNumber: MockedFunction<typeof chrome.enterprise.deviceAttributes.getDeviceSerialNumber>
   /**
    * @since Chrome 66.
    *
@@ -3218,7 +3234,7 @@ export namespace Enterprise.deviceAttributes {
    *
    * @param callback Called with the Asset ID of the device.
    */
-  export const getDeviceAssetId: jest.MockedFunction<typeof chrome.enterprise.deviceAttributes.getDeviceAssetId>
+  export const getDeviceAssetId: MockedFunction<typeof chrome.enterprise.deviceAttributes.getDeviceAssetId>
   /**
    * @since Chrome 66.
    *
@@ -3230,7 +3246,7 @@ export namespace Enterprise.deviceAttributes {
    *
    * @param callback Called with the Annotated Location of the device.
    */
-  export const getDeviceAnnotatedLocation: jest.MockedFunction<typeof chrome.enterprise.deviceAttributes.getDeviceAnnotatedLocation>
+  export const getDeviceAnnotatedLocation: MockedFunction<typeof chrome.enterprise.deviceAttributes.getDeviceAnnotatedLocation>
 }
 
 ////////////////////
@@ -3423,14 +3439,14 @@ export namespace Extension {
   export let lastError: LastError | undefined
 
   export interface OnRequestEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       | ((
           request: any,
-          sender: JestChromeNamespace.runtime.MessageSender,
+          sender: VitestChromeNamespace.runtime.MessageSender,
           sendResponse: (response: any) => void,
         ) => void)
       | ((
-          sender: JestChromeNamespace.runtime.MessageSender,
+          sender: VitestChromeNamespace.runtime.MessageSender,
           sendResponse: (response: any) => void,
         ) => void)
     > {}
@@ -3443,22 +3459,22 @@ export namespace Extension {
   export const inIncognitoContext: boolean
 
   /** Returns the JavaScript 'window' object for the background page running inside the current extension. Returns null if the extension has no background page. */
-  export const getBackgroundPage: jest.MockedFunction<typeof chrome.extension.getBackgroundPage>
+  export const getBackgroundPage: MockedFunction<typeof chrome.extension.getBackgroundPage>
 
   /**
    * Converts a relative path within an extension install directory to a fully-qualified URL.
    *
    * @param path A path to a resource within an extension expressed relative to its install directory.
    */
-  export const getURL: jest.MockedFunction<typeof chrome.extension.getURL>
+  export const getURL: MockedFunction<typeof chrome.extension.getURL>
   /**
    * Sets the value of the ap CGI parameter used in the extension's update URL. This value is ignored for extensions that are hosted in the Chrome Extension Gallery.
    *
    * Since Chrome 9.
    */
-  export const setUpdateUrlData: jest.MockedFunction<typeof chrome.extension.setUpdateUrlData>
+  export const setUpdateUrlData: MockedFunction<typeof chrome.extension.setUpdateUrlData>
   /** Returns an array of the JavaScript 'window' objects for each of the pages running inside the current extension. */
-  export const getViews: jest.MockedFunction<typeof chrome.extension.getViews>
+  export const getViews: MockedFunction<typeof chrome.extension.getViews>
   /**
    * Retrieves the state of the extension's access to the 'file://' scheme (as determined by the user-controlled 'Allow access to File URLs' checkbox.
    *
@@ -3470,7 +3486,7 @@ export namespace Extension {
    *
    * Parameter isAllowedAccess: True if the extension can access the 'file://' scheme, false otherwise.
    */
-  export const isAllowedFileSchemeAccess: jest.MockedFunction<typeof chrome.extension.isAllowedFileSchemeAccess>
+  export const isAllowedFileSchemeAccess: MockedFunction<typeof chrome.extension.isAllowedFileSchemeAccess>
   /**
    * Retrieves the state of the extension's access to Incognito-mode (as determined by the user-controlled 'Allowed in Incognito' checkbox.
    *
@@ -3482,7 +3498,7 @@ export namespace Extension {
    *
    * Parameter isAllowedAccess: True if the extension has access to Incognito mode, false otherwise.
    */
-  export const isAllowedIncognitoAccess: jest.MockedFunction<typeof chrome.extension.isAllowedIncognitoAccess>
+  export const isAllowedIncognitoAccess: MockedFunction<typeof chrome.extension.isAllowedIncognitoAccess>
   /**
    * Sends a single request to other listeners within the extension. Similar to runtime.connect, but only sends a single request with an optional response. The extension.onRequest event is fired in each page of the extension.
    *
@@ -3496,14 +3512,14 @@ export namespace Extension {
    *
    * Parameter response: The JSON response object sent by the handler of the request. If an error occurs while connecting to the extension, the callback will be called with no arguments and runtime.lastError will be set to the error message.
    */
-  export const sendRequest: jest.MockedFunction<typeof chrome.extension.sendRequest>
+  export const sendRequest: MockedFunction<typeof chrome.extension.sendRequest>
 
   /**
    * Returns an array of the JavaScript 'window' objects for each of the tabs running inside the current extension. If windowId is specified, returns only the 'window' objects of tabs attached to the specified window.
    *
    * @deprecated Deprecated since Chrome 33. Please use extension.getViews {type: "tab"}.
    */
-  export const getExtensionTabs: jest.MockedFunction<typeof chrome.extension.getExtensionTabs>
+  export const getExtensionTabs: MockedFunction<typeof chrome.extension.getExtensionTabs>
 
   /**
    * Fired when a request is sent from either an extension process or a content script.
@@ -3561,7 +3577,7 @@ export namespace FileBrowserHandler {
   }
 
   export interface FileBrowserHandlerExecuteEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (
         id: string,
         details: FileHandlerExecuteEventDetails,
@@ -3583,7 +3599,7 @@ export namespace FileBrowserHandler {
    *
    * Parameter result: Result of the method.
    */
-  export const selectFile: jest.MockedFunction<typeof chrome.fileBrowserHandler.selectFile>
+  export const selectFile: MockedFunction<typeof chrome.fileBrowserHandler.selectFile>
 
   /** Fired when file system action is executed from ChromeOS file browser. */
   export const onExecute: FileBrowserHandlerExecuteEvent
@@ -3844,7 +3860,7 @@ export namespace FileSystemProvider {
   }
 
   export interface RequestedEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (
         options: RequestedEventOptions,
         successCallback: Function,
@@ -3853,7 +3869,7 @@ export namespace FileSystemProvider {
     > {}
 
   export interface MetadataRequestedEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (
         options: MetadataRequestedEventOptions,
         successCallback: (metadata: EntryMetadata) => void,
@@ -3862,7 +3878,7 @@ export namespace FileSystemProvider {
     > {}
 
   export interface DirectoryPathRequestedEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (
         options: DirectoryPathRequestedEventOptions,
         successCallback: (
@@ -3874,7 +3890,7 @@ export namespace FileSystemProvider {
     > {}
 
   export interface OpenFileRequestedEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (
         options: OpenFileRequestedEventOptions,
         successCallback: Function,
@@ -3883,7 +3899,7 @@ export namespace FileSystemProvider {
     > {}
 
   export interface OpenedFileRequestedEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (
         options: OpenedFileRequestedEventOptions,
         successCallback: Function,
@@ -3892,7 +3908,7 @@ export namespace FileSystemProvider {
     > {}
 
   export interface OpenedFileOffsetRequestedEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (
         options: OpenedFileOffsetRequestedEventOptions,
         successCallback: (
@@ -3904,7 +3920,7 @@ export namespace FileSystemProvider {
     > {}
 
   export interface DirectoryPathRecursiveRequestedEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (
         options: DirectoryPathRecursiveRequestedEventOptions,
         successCallback: Function,
@@ -3913,7 +3929,7 @@ export namespace FileSystemProvider {
     > {}
 
   export interface EntryPathRecursiveRequestedEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (
         options: EntryPathRecursiveRequestedEventOptions,
         successCallback: Function,
@@ -3922,7 +3938,7 @@ export namespace FileSystemProvider {
     > {}
 
   export interface FilePathRequestedEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (
         options: FilePathRequestedEventOptions,
         successCallback: Function,
@@ -3931,7 +3947,7 @@ export namespace FileSystemProvider {
     > {}
 
   export interface SourceTargetPathRequestedEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (
         options: SourceTargetPathRequestedEventOptions,
         successCallback: Function,
@@ -3940,7 +3956,7 @@ export namespace FileSystemProvider {
     > {}
 
   export interface FilePathLengthRequestedEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (
         options: FilePathLengthRequestedEventOptions,
         successCallback: Function,
@@ -3949,7 +3965,7 @@ export namespace FileSystemProvider {
     > {}
 
   export interface OpenedFileIoRequestedEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (
         options: OpenedFileIoRequestedEventOptions,
         successCallback: Function,
@@ -3958,7 +3974,7 @@ export namespace FileSystemProvider {
     > {}
 
   export interface OperationRequestedEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (
         options: OperationRequestedEventOptions,
         successCallback: Function,
@@ -3967,7 +3983,7 @@ export namespace FileSystemProvider {
     > {}
 
   export interface OptionlessRequestedEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (
         successCallback: Function,
         errorCallback: (error: string) => void,
@@ -3987,7 +4003,7 @@ export namespace FileSystemProvider {
    *
    * function() {...};
    */
-  export const mount: jest.MockedFunction<typeof chrome.fileSystemProvider.mount>
+  export const mount: MockedFunction<typeof chrome.fileSystemProvider.mount>
   /**
    * Unmounts a file system with the given fileSystemId. It must be called after onUnmountRequested is invoked. Also, the providing extension can decide to perform unmounting if not requested (eg. in case of lost connection, or a file error).
    *
@@ -3999,7 +4015,7 @@ export namespace FileSystemProvider {
    *
    * function() {...};
    */
-  export const unmount: jest.MockedFunction<typeof chrome.fileSystemProvider.unmount>
+  export const unmount: MockedFunction<typeof chrome.fileSystemProvider.unmount>
   /**
    * Returns all file systems mounted by the extension.
    *
@@ -4009,7 +4025,7 @@ export namespace FileSystemProvider {
    *
    * function(array of FileSystemInfo fileSystems) {...};
    */
-  export const getAll: jest.MockedFunction<typeof chrome.fileSystemProvider.getAll>
+  export const getAll: MockedFunction<typeof chrome.fileSystemProvider.getAll>
   /**
    * Returns information about a file system with the passed fileSystemId.
    *
@@ -4021,7 +4037,7 @@ export namespace FileSystemProvider {
    *
    * function(FileSystemInfo fileSystem) {...};
    */
-  export const get: jest.MockedFunction<typeof chrome.fileSystemProvider.get>
+  export const get: MockedFunction<typeof chrome.fileSystemProvider.get>
   /**
    * Notifies about changes in the watched directory at observedPath in recursive mode. If the file system is mounted with supportsNofityTag, then tag must be provided, and all changes since the last notification always reported, even if the system was shutdown. The last tag can be obtained with getAll.
    *
@@ -4041,7 +4057,7 @@ export namespace FileSystemProvider {
    *
    * function() {...};
    */
-  export const notify: jest.MockedFunction<typeof chrome.fileSystemProvider.notify>
+  export const notify: MockedFunction<typeof chrome.fileSystemProvider.notify>
 
   /** Raised when unmounting for the file system with the fileSystemId identifier is requested. In the response, the unmount API method must be called together with successCallback. If unmounting is not possible (eg. due to a pending operation), then errorCallback must be called.  */
   export const onUnmountRequested: RequestedEvent
@@ -4164,22 +4180,22 @@ export namespace FontSettings {
   }
 
   export interface DefaultFixedFontSizeChangedEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (details: FontSizeDetails) => void
     > {}
 
   export interface DefaultFontSizeChangedEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (details: FontSizeDetails) => void
     > {}
 
   export interface MinimumFontSizeChangedEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (details: FontSizeDetails) => void
     > {}
 
   export interface FontChangedEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (details: FullFontDetails) => void
     > {}
 
@@ -4190,7 +4206,7 @@ export namespace FontSettings {
    *
    * function() {...};
    */
-  export const setDefaultFontSize: jest.MockedFunction<typeof chrome.fontSettings.setDefaultFontSize>
+  export const setDefaultFontSize: MockedFunction<typeof chrome.fontSettings.setDefaultFontSize>
   /**
    * Gets the font for a given script and generic font family.
    *
@@ -4198,7 +4214,7 @@ export namespace FontSettings {
    *
    * function(object details) {...};
    */
-  export const getFont: jest.MockedFunction<typeof chrome.fontSettings.getFont>
+  export const getFont: MockedFunction<typeof chrome.fontSettings.getFont>
   /**
    * Gets the default font size.
    *
@@ -4208,7 +4224,7 @@ export namespace FontSettings {
    *
    * function(object details) {...};
    */
-  export const getDefaultFontSize: jest.MockedFunction<typeof chrome.fontSettings.getDefaultFontSize>
+  export const getDefaultFontSize: MockedFunction<typeof chrome.fontSettings.getDefaultFontSize>
   /**
    * Gets the minimum font size.
    *
@@ -4218,7 +4234,7 @@ export namespace FontSettings {
    *
    * function(object details) {...};
    */
-  export const getMinimumFontSize: jest.MockedFunction<typeof chrome.fontSettings.getMinimumFontSize>
+  export const getMinimumFontSize: MockedFunction<typeof chrome.fontSettings.getMinimumFontSize>
   /**
    * Sets the minimum font size.
    *
@@ -4226,7 +4242,7 @@ export namespace FontSettings {
    *
    * function() {...};
    */
-  export const setMinimumFontSize: jest.MockedFunction<typeof chrome.fontSettings.setMinimumFontSize>
+  export const setMinimumFontSize: MockedFunction<typeof chrome.fontSettings.setMinimumFontSize>
   /**
    * Gets the default size for fixed width fonts.
    *
@@ -4236,7 +4252,7 @@ export namespace FontSettings {
    *
    * function(object details) {...};
    */
-  export const getDefaultFixedFontSize: jest.MockedFunction<typeof chrome.fontSettings.getDefaultFixedFontSize>
+  export const getDefaultFixedFontSize: MockedFunction<typeof chrome.fontSettings.getDefaultFixedFontSize>
   /**
    * Clears the default font size set by this extension, if any.
    *
@@ -4246,7 +4262,7 @@ export namespace FontSettings {
    *
    * function() {...};
    */
-  export const clearDefaultFontSize: jest.MockedFunction<typeof chrome.fontSettings.clearDefaultFontSize>
+  export const clearDefaultFontSize: MockedFunction<typeof chrome.fontSettings.clearDefaultFontSize>
   /**
    * Sets the default size for fixed width fonts.
    *
@@ -4254,7 +4270,7 @@ export namespace FontSettings {
    *
    * function() {...};
    */
-  export const setDefaultFixedFontSize: jest.MockedFunction<typeof chrome.fontSettings.setDefaultFixedFontSize>
+  export const setDefaultFixedFontSize: MockedFunction<typeof chrome.fontSettings.setDefaultFixedFontSize>
   /**
    * Clears the font set by this extension, if any.
    *
@@ -4262,7 +4278,7 @@ export namespace FontSettings {
    *
    * function() {...};
    */
-  export const clearFont: jest.MockedFunction<typeof chrome.fontSettings.clearFont>
+  export const clearFont: MockedFunction<typeof chrome.fontSettings.clearFont>
   /**
    * Sets the font for a given script and generic font family.
    *
@@ -4270,7 +4286,7 @@ export namespace FontSettings {
    *
    * function(object details) {...};
    */
-  export const setFont: jest.MockedFunction<typeof chrome.fontSettings.setFont>
+  export const setFont: MockedFunction<typeof chrome.fontSettings.setFont>
   /**
    * Clears the minimum font size set by this extension, if any.
    *
@@ -4280,7 +4296,7 @@ export namespace FontSettings {
    *
    * function() {...};
    */
-  export const clearMinimumFontSize: jest.MockedFunction<typeof chrome.fontSettings.clearMinimumFontSize>
+  export const clearMinimumFontSize: MockedFunction<typeof chrome.fontSettings.clearMinimumFontSize>
   /**
    * Gets a list of fonts on the system.
    *
@@ -4288,7 +4304,7 @@ export namespace FontSettings {
    *
    * function(array of FontName results) {...};
    */
-  export const getFontList: jest.MockedFunction<typeof chrome.fontSettings.getFontList>
+  export const getFontList: MockedFunction<typeof chrome.fontSettings.getFontList>
   /**
    * Clears the default fixed font size set by this extension, if any.
    *
@@ -4298,7 +4314,7 @@ export namespace FontSettings {
    *
    * function() {...};
    */
-  export const clearDefaultFixedFontSize: jest.MockedFunction<typeof chrome.fontSettings.clearDefaultFixedFontSize>
+  export const clearDefaultFixedFontSize: MockedFunction<typeof chrome.fontSettings.clearDefaultFixedFontSize>
 
   /** Fired when the default fixed font size setting changes. */
   export const onDefaultFixedFontSizeChanged: DefaultFixedFontSizeChangedEvent
@@ -4361,15 +4377,17 @@ export namespace Gcm {
   }
 
   export interface MessageReceptionEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (message: IncomingMessage) => void
     > {}
 
   export interface MessageDeletionEvent
-    extends JestChromeNamespace.events.Event<() => void> {}
+    extends VitestChromeNamespace.events.Event<() => void> {}
 
   export interface GcmErrorEvent
-    extends JestChromeNamespace.events.Event<(error: GcmError) => void> {}
+    extends VitestChromeNamespace.events.Event<
+      (error: GcmError) => void
+    > {}
 
   /** The maximum size (in bytes) of all key/value pairs in a message. */
   export const MAX_MESSAGE_SIZE: number
@@ -4387,7 +4405,7 @@ export namespace Gcm {
    *
    * Parameter registrationId: A registration ID assigned to the application by the GCM.
    */
-  export const register: jest.MockedFunction<typeof chrome.gcm.register>
+  export const register: MockedFunction<typeof chrome.gcm.register>
   /**
    * Unregisters the application from GCM.
    *
@@ -4397,7 +4415,7 @@ export namespace Gcm {
    *
    * function() {...};
    */
-  export const unregister: jest.MockedFunction<typeof chrome.gcm.unregister>
+  export const unregister: MockedFunction<typeof chrome.gcm.unregister>
   /**
    * Sends a message according to its contents.
    *
@@ -4411,7 +4429,7 @@ export namespace Gcm {
    *
    * Parameter messageId: The ID of the message that the callback was issued for.
    */
-  export const send: jest.MockedFunction<typeof chrome.gcm.send>
+  export const send: MockedFunction<typeof chrome.gcm.send>
 
   /** Fired when a message is received through GCM. */
   export const onMessage: MessageReceptionEvent
@@ -4493,12 +4511,12 @@ export namespace History {
   }
 
   export interface HistoryVisitedEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (result: HistoryItem) => void
     > {}
 
   export interface HistoryVisitRemovedEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (removed: RemovedResult) => void
     > {}
 
@@ -4509,7 +4527,7 @@ export namespace History {
    *
    * function(array of HistoryItem results) {...};
    */
-  export const search: jest.MockedFunction<typeof chrome.history.search>
+  export const search: MockedFunction<typeof chrome.history.search>
   /**
    * Adds a URL to the history at the current time with a transition type of "link".
    *
@@ -4517,7 +4535,7 @@ export namespace History {
    *
    * function() {...};
    */
-  export const addUrl: jest.MockedFunction<typeof chrome.history.addUrl>
+  export const addUrl: MockedFunction<typeof chrome.history.addUrl>
   /**
    * Removes all items within the specified date range from the history. Pages will not be removed from the history unless all visits fall within the range.
    *
@@ -4525,7 +4543,7 @@ export namespace History {
    *
    * function() {...};
    */
-  export const deleteRange: jest.MockedFunction<typeof chrome.history.deleteRange>
+  export const deleteRange: MockedFunction<typeof chrome.history.deleteRange>
   /**
    * Deletes all items from the history.
    *
@@ -4533,7 +4551,7 @@ export namespace History {
    *
    * function() {...};
    */
-  export const deleteAll: jest.MockedFunction<typeof chrome.history.deleteAll>
+  export const deleteAll: MockedFunction<typeof chrome.history.deleteAll>
   /**
    * Retrieves information about visits to a URL.
    *
@@ -4541,7 +4559,7 @@ export namespace History {
    *
    * function(array of VisitItem results) {...};
    */
-  export const getVisits: jest.MockedFunction<typeof chrome.history.getVisits>
+  export const getVisits: MockedFunction<typeof chrome.history.getVisits>
   /**
    * Removes all occurrences of the given URL from the history.
    *
@@ -4549,7 +4567,7 @@ export namespace History {
    *
    * function() {...};
    */
-  export const deleteUrl: jest.MockedFunction<typeof chrome.history.deleteUrl>
+  export const deleteUrl: MockedFunction<typeof chrome.history.deleteUrl>
 
   /** Fired when a URL is visited, providing the HistoryItem data for that URL. This event fires before the page has loaded. */
   export const onVisited: HistoryVisitedEvent
@@ -4599,7 +4617,7 @@ export namespace I18n {
    *
    * Parameter languages: Array of the accept languages of the browser, such as en-US,en,zh-CN
    */
-  export const getAcceptLanguages: jest.MockedFunction<typeof chrome.i18n.getAcceptLanguages>
+  export const getAcceptLanguages: MockedFunction<typeof chrome.i18n.getAcceptLanguages>
 
   /**
    * Gets the localized string for the specified message. If the message is missing, this method returns an empty string (''). If the format of the getMessage() call is wrong — for example, messageName is not a string or the substitutions array has more than 9 elements — this method returns undefined.
@@ -4608,14 +4626,14 @@ export namespace I18n {
    *
    * @param substitutions Optional. Up to 9 substitution strings, if the message requires any.
    */
-  export const getMessage: jest.MockedFunction<typeof chrome.i18n.getMessage>
+  export const getMessage: MockedFunction<typeof chrome.i18n.getMessage>
 
   /**
    * Gets the browser UI language of the browser. This is different from i18n.getAcceptLanguages which returns the preferred user languages.
    *
    * @since Chrome 35.
    */
-  export const getUILanguage: jest.MockedFunction<typeof chrome.i18n.getUILanguage>
+  export const getUILanguage: MockedFunction<typeof chrome.i18n.getUILanguage>
 
   /**
    * Detects the language of the provided text using CLD.
@@ -4624,7 +4642,7 @@ export namespace I18n {
    *
    * @param callback The callback parameter should be a function that looks like this: function(object result) {...};
    */
-  export const detectLanguage: jest.MockedFunction<typeof chrome.i18n.detectLanguage>
+  export const detectLanguage: MockedFunction<typeof chrome.i18n.detectLanguage>
 }
 
 ////////////////////
@@ -4701,7 +4719,7 @@ export namespace Identity {
   }
 
   export interface SignInChangeEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (account: AccountInfo, signedIn: boolean) => void
     > {}
 
@@ -4712,7 +4730,7 @@ export namespace Identity {
    *
    * Dev channel only.
    */
-  export const getAccounts: jest.MockedFunction<typeof chrome.identity.getAccounts>
+  export const getAccounts: MockedFunction<typeof chrome.identity.getAccounts>
   /**
    * Gets an OAuth2 access token using the client ID and scopes specified in the oauth2 section of manifest.json.
    *
@@ -4728,7 +4746,7 @@ export namespace Identity {
    *
    * function(string token) {...};
    */
-  export const getAuthToken: jest.MockedFunction<typeof chrome.identity.getAuthToken>
+  export const getAuthToken: MockedFunction<typeof chrome.identity.getAuthToken>
   /**
    * Retrieves email address and obfuscated gaia id of the user signed into a profile.
    *
@@ -4736,7 +4754,7 @@ export namespace Identity {
    *
    * @since Chrome 37.
    */
-  export const getProfileUserInfo: jest.MockedFunction<typeof chrome.identity.getProfileUserInfo>
+  export const getProfileUserInfo: MockedFunction<typeof chrome.identity.getProfileUserInfo>
   /**
    * Removes an OAuth2 access token from the Identity API's token cache.
    *
@@ -4750,7 +4768,7 @@ export namespace Identity {
    *
    * function() {...};
    */
-  export const removeCachedAuthToken: jest.MockedFunction<typeof chrome.identity.removeCachedAuthToken>
+  export const removeCachedAuthToken: MockedFunction<typeof chrome.identity.removeCachedAuthToken>
   /**
    * Starts an auth flow at the specified URL.
    *
@@ -4766,7 +4784,7 @@ export namespace Identity {
    *
    * function(string responseUrl) {...};
    */
-  export const launchWebAuthFlow: jest.MockedFunction<typeof chrome.identity.launchWebAuthFlow>
+  export const launchWebAuthFlow: MockedFunction<typeof chrome.identity.launchWebAuthFlow>
   /**
    * Generates a redirect URL to be used in launchWebAuthFlow.
    *
@@ -4776,7 +4794,7 @@ export namespace Identity {
    *
    * @param path Optional. The path appended to the end of the generated URL.
    */
-  export const getRedirectURL: jest.MockedFunction<typeof chrome.identity.getRedirectURL>
+  export const getRedirectURL: MockedFunction<typeof chrome.identity.getRedirectURL>
 
   /**
    * Fired when signin state changes for an account on the user's profile.
@@ -4798,7 +4816,7 @@ export namespace Identity {
  */
 export namespace Idle {
   export interface IdleStateChangedEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (newState: string) => void
     > {}
 
@@ -4813,7 +4831,7 @@ export namespace Idle {
    *
    * function( IdleState newState) {...};
    */
-  export const queryState: jest.MockedFunction<typeof chrome.idle.queryState>
+  export const queryState: MockedFunction<typeof chrome.idle.queryState>
   /**
    * Sets the interval, in seconds, used to determine when the system is in an idle state for onStateChanged events. The default interval is 60 seconds.
    *
@@ -4821,7 +4839,7 @@ export namespace Idle {
    *
    * @param intervalInSeconds Threshold, in seconds, used to determine when the system is in an idle state.
    */
-  export const setDetectionInterval: jest.MockedFunction<typeof chrome.idle.setDetectionInterval>
+  export const setDetectionInterval: MockedFunction<typeof chrome.idle.setDetectionInterval>
 
   /** Fired when the system changes to an active, idle or locked state. The event fires with "locked" if the screen is locked or the screensaver activates, "idle" if the system is unlocked and the user has not generated any input for a specified number of seconds, and "active" when the user generates input on an idle system. */
   export const onStateChanged: IdleStateChangedEvent
@@ -5125,12 +5143,12 @@ export namespace Input.ime {
   }
 
   export interface BlurEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (contextID: number) => void
     > {}
 
   export interface CandidateClickedEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (
         engineID: string,
         candidateID: number,
@@ -5139,37 +5157,37 @@ export namespace Input.ime {
     > {}
 
   export interface KeyEventEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (engineID: string, keyData: KeyboardEvent) => void
     > {}
 
   export interface DeactivatedEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (engineID: string) => void
     > {}
 
   export interface InputContextUpdateEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (context: InputContext) => void
     > {}
 
   export interface ActivateEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (engineID: string, screen: string) => void
     > {}
 
   export interface FocusEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (context: InputContext) => void
     > {}
 
   export interface MenuItemActivatedEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (engineID: string, name: string) => void
     > {}
 
   export interface SurroundingTextChangedEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (
         engineID: string,
         surroundingInfo: SurroundingTextInfo,
@@ -5177,7 +5195,7 @@ export namespace Input.ime {
     > {}
 
   export interface InputResetEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (engineID: string) => void
     > {}
 
@@ -5188,7 +5206,7 @@ export namespace Input.ime {
    *
    * function() {...};
    */
-  export const setMenuItems: jest.MockedFunction<typeof chrome.input.ime.setMenuItems>
+  export const setMenuItems: MockedFunction<typeof chrome.input.ime.setMenuItems>
   /**
    * Commits the provided text to the current input.
    *
@@ -5198,7 +5216,7 @@ export namespace Input.ime {
    *
    * function(boolean success) {...};
    */
-  export const commitText: jest.MockedFunction<typeof chrome.input.ime.commitText>
+  export const commitText: MockedFunction<typeof chrome.input.ime.commitText>
   /**
    * Sets the current candidate list. This fails if this extension doesn't own the active IME
    *
@@ -5208,7 +5226,7 @@ export namespace Input.ime {
    *
    * function(boolean success) {...};
    */
-  export const setCandidates: jest.MockedFunction<typeof chrome.input.ime.setCandidates>
+  export const setCandidates: MockedFunction<typeof chrome.input.ime.setCandidates>
   /**
    * Set the current composition. If this extension does not own the active IME, this fails.
    *
@@ -5218,7 +5236,7 @@ export namespace Input.ime {
    *
    * function(boolean success) {...};
    */
-  export const setComposition: jest.MockedFunction<typeof chrome.input.ime.setComposition>
+  export const setComposition: MockedFunction<typeof chrome.input.ime.setComposition>
   /**
    * Updates the state of the MenuItems specified
    *
@@ -5228,7 +5246,7 @@ export namespace Input.ime {
    *
    * function() {...};
    */
-  export const updateMenuItems: jest.MockedFunction<typeof chrome.input.ime.updateMenuItems>
+  export const updateMenuItems: MockedFunction<typeof chrome.input.ime.updateMenuItems>
   /**
    * Sets the properties of the candidate window. This fails if the extension doesn't own the active IME
    *
@@ -5238,7 +5256,7 @@ export namespace Input.ime {
    *
    * function(boolean success) {...};
    */
-  export const setCandidateWindowProperties: jest.MockedFunction<typeof chrome.input.ime.setCandidateWindowProperties>
+  export const setCandidateWindowProperties: MockedFunction<typeof chrome.input.ime.setCandidateWindowProperties>
   /**
    * Clear the current composition. If this extension does not own the active IME, this fails.
    *
@@ -5248,7 +5266,7 @@ export namespace Input.ime {
    *
    * function(boolean success) {...};
    */
-  export const clearComposition: jest.MockedFunction<typeof chrome.input.ime.clearComposition>
+  export const clearComposition: MockedFunction<typeof chrome.input.ime.clearComposition>
   /**
    * Set the position of the cursor in the candidate window. This is a no-op if this extension does not own the active IME.
    *
@@ -5258,7 +5276,7 @@ export namespace Input.ime {
    *
    * function(boolean success) {...};
    */
-  export const setCursorPosition: jest.MockedFunction<typeof chrome.input.ime.setCursorPosition>
+  export const setCursorPosition: MockedFunction<typeof chrome.input.ime.setCursorPosition>
   /**
    * Sends the key events. This function is expected to be used by virtual keyboards. When key(s) on a virtual keyboard is pressed by a user, this function is used to propagate that event to the system.
    *
@@ -5270,21 +5288,21 @@ export namespace Input.ime {
    *
    * function() {...};
    */
-  export const sendKeyEvents: jest.MockedFunction<typeof chrome.input.ime.sendKeyEvents>
+  export const sendKeyEvents: MockedFunction<typeof chrome.input.ime.sendKeyEvents>
 
   /**
    * Hides the input view window, which is popped up automatically by system. If the input view window is already hidden, this function will do nothing.
    *
    * @since Chrome 34.
    */
-  export const hideInputView: jest.MockedFunction<typeof chrome.input.ime.hideInputView>
+  export const hideInputView: MockedFunction<typeof chrome.input.ime.hideInputView>
 
   /**
    * Deletes the text around the caret.
    *
    * @since Chrome 27.
    */
-  export const deleteSurroundingText: jest.MockedFunction<typeof chrome.input.ime.deleteSurroundingText>
+  export const deleteSurroundingText: MockedFunction<typeof chrome.input.ime.deleteSurroundingText>
   /**
    * Indicates that the key event received by onKeyEvent is handled. This should only be called if the onKeyEvent listener is asynchronous.
    *
@@ -5294,7 +5312,7 @@ export namespace Input.ime {
    *
    * @param response True if the keystroke was handled, false if not
    */
-  export const keyEventHandled: jest.MockedFunction<typeof chrome.input.ime.keyEventHandled>
+  export const keyEventHandled: MockedFunction<typeof chrome.input.ime.keyEventHandled>
 
   /** This event is sent when focus leaves a text box. It is sent to all extensions that are listening to this event, and enabled by the user. */
   export const onBlur: BlurEvent
@@ -5471,20 +5489,22 @@ export namespace Management {
   }
 
   export interface ManagementDisabledEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (info: ExtensionInfo) => void
     > {}
 
   export interface ManagementUninstalledEvent
-    extends JestChromeNamespace.events.Event<(id: string) => void> {}
+    extends VitestChromeNamespace.events.Event<
+      (id: string) => void
+    > {}
 
   export interface ManagementInstalledEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (info: ExtensionInfo) => void
     > {}
 
   export interface ManagementEnabledEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (info: ExtensionInfo) => void
     > {}
 
@@ -5499,7 +5519,7 @@ export namespace Management {
    *
    * function() {...};
    */
-  export const setEnabled: jest.MockedFunction<typeof chrome.management.setEnabled>
+  export const setEnabled: MockedFunction<typeof chrome.management.setEnabled>
   /**
    * Returns a list of permission warnings for the given extension id.
    *
@@ -5511,7 +5531,7 @@ export namespace Management {
    *
    * function(array of string permissionWarnings) {...};
    */
-  export const getPermissionWarningsById: jest.MockedFunction<typeof chrome.management.getPermissionWarningsById>
+  export const getPermissionWarningsById: MockedFunction<typeof chrome.management.getPermissionWarningsById>
   /**
    * Returns information about the installed extension, app, or theme that has the given ID.
    *
@@ -5523,7 +5543,7 @@ export namespace Management {
    *
    * function( ExtensionInfo result) {...};
    */
-  export const get: jest.MockedFunction<typeof chrome.management.get>
+  export const get: MockedFunction<typeof chrome.management.get>
   /**
    * Returns a list of information about installed extensions and apps.
    *
@@ -5531,7 +5551,7 @@ export namespace Management {
    *
    * function(array of ExtensionInfo result) {...};
    */
-  export const getAll: jest.MockedFunction<typeof chrome.management.getAll>
+  export const getAll: MockedFunction<typeof chrome.management.getAll>
   /**
    * Returns a list of permission warnings for the given extension manifest string. Note: This function can be used without requesting the 'management' permission in the manifest.
    *
@@ -5543,7 +5563,7 @@ export namespace Management {
    *
    * function(array of string permissionWarnings) {...};
    */
-  export const getPermissionWarningsByManifest: jest.MockedFunction<typeof chrome.management.getPermissionWarningsByManifest>
+  export const getPermissionWarningsByManifest: MockedFunction<typeof chrome.management.getPermissionWarningsByManifest>
   /**
    * Launches an application.
    *
@@ -5553,7 +5573,7 @@ export namespace Management {
    *
    * function() {...};
    */
-  export const launchApp: jest.MockedFunction<typeof chrome.management.launchApp>
+  export const launchApp: MockedFunction<typeof chrome.management.launchApp>
   /**
    * Uninstalls a currently installed app or extension.
    *
@@ -5565,7 +5585,7 @@ export namespace Management {
    *
    * function() {...};
    */
-  export const uninstall: jest.MockedFunction<typeof chrome.management.uninstall>
+  export const uninstall: MockedFunction<typeof chrome.management.uninstall>
   /**
    * Returns information about the calling extension, app, or theme. Note: This function can be used without requesting the 'management' permission in the manifest.
    *
@@ -5575,7 +5595,7 @@ export namespace Management {
    *
    * function( ExtensionInfo result) {...};
    */
-  export const getSelf: jest.MockedFunction<typeof chrome.management.getSelf>
+  export const getSelf: MockedFunction<typeof chrome.management.getSelf>
   /**
    * Uninstalls the calling extension.
    *
@@ -5587,7 +5607,7 @@ export namespace Management {
    *
    * function() {...};
    */
-  export const uninstallSelf: jest.MockedFunction<typeof chrome.management.uninstallSelf>
+  export const uninstallSelf: MockedFunction<typeof chrome.management.uninstallSelf>
 
   /**
    * Display options to create shortcuts for an app. On Mac, only packaged app shortcuts can be created.
@@ -5598,7 +5618,7 @@ export namespace Management {
    *
    * function() {...};
    */
-  export const createAppShortcut: jest.MockedFunction<typeof chrome.management.createAppShortcut>
+  export const createAppShortcut: MockedFunction<typeof chrome.management.createAppShortcut>
   /**
    * Set the launch type of an app.
    *
@@ -5612,7 +5632,7 @@ export namespace Management {
    *
    * function() {...};
    */
-  export const setLaunchType: jest.MockedFunction<typeof chrome.management.setLaunchType>
+  export const setLaunchType: MockedFunction<typeof chrome.management.setLaunchType>
   /**
    * Generate an app for a URL. Returns the generated bookmark app.
    *
@@ -5626,7 +5646,7 @@ export namespace Management {
    *
    * function( ExtensionInfo result) {...};
    */
-  export const generateAppForLink: jest.MockedFunction<typeof chrome.management.generateAppForLink>
+  export const generateAppForLink: MockedFunction<typeof chrome.management.generateAppForLink>
 
   /** Fired when an app or extension has been disabled. */
   export const onDisabled: ManagementDisabledEvent
@@ -5667,7 +5687,7 @@ export namespace Networking.config {
   }
 
   export interface CaptivePorttalDetectedEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (networkInfo: NetworkInfo) => void
     > {}
 
@@ -5682,7 +5702,7 @@ export namespace Networking.config {
    *
    * function() {...};
    */
-  export const setNetworkFilter: jest.MockedFunction<typeof chrome.networking.config.setNetworkFilter>
+  export const setNetworkFilter: MockedFunction<typeof chrome.networking.config.setNetworkFilter>
   /**
    * Called by the extension to notify the network config API that it finished a captive portal authentication attempt and hand over the result of the attempt. This function must only be called with the GUID of the latest onCaptivePortalDetected event.
    *
@@ -5704,7 +5724,7 @@ export namespace Networking.config {
    *
    * function() {...};
    */
-  export const finishAuthentication: jest.MockedFunction<typeof chrome.networking.config.finishAuthentication>
+  export const finishAuthentication: MockedFunction<typeof chrome.networking.config.finishAuthentication>
 
   /** This event fires everytime a captive portal is detected on a network matching any of the currently registered network filters and the user consents to use the extension for authentication. Network filters may be set using the setNetworkFilter. Upon receiving this event the extension should start its authentication attempt with the captive portal. When the extension finishes its attempt, it must call finishAuthentication with the GUID received with this event and the appropriate authentication result. */
   export const onCaptivePortalDetected: CaptivePorttalDetectedEvent
@@ -5802,25 +5822,27 @@ export namespace Notifications {
   }
 
   export interface NotificationClosedEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (notificationId: string, byUser: boolean) => void
     > {}
 
   export interface NotificationClickedEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (notificationId: string) => void
     > {}
 
   export interface NotificationButtonClickedEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (notificationId: string, buttonIndex: number) => void
     > {}
 
   export interface NotificationPermissionLevelChangedEvent
-    extends JestChromeNamespace.events.Event<(level: string) => void> {}
+    extends VitestChromeNamespace.events.Event<
+      (level: string) => void
+    > {}
 
   export interface NotificationShowSettingsEvent
-    extends JestChromeNamespace.events.Event<() => void> {}
+    extends VitestChromeNamespace.events.Event<() => void> {}
 
   /** The notification closed, either by the system or by user action. */
   export const onClosed: NotificationClosedEvent
@@ -5858,7 +5880,7 @@ export namespace Notifications {
    *
    * function(string notificationId) {...};
    */
-  export const create: jest.MockedFunction<typeof chrome.notifications.create>
+  export const create: MockedFunction<typeof chrome.notifications.create>
 
   /**
    * Updates an existing notification.
@@ -5875,7 +5897,7 @@ export namespace Notifications {
    *
    * function(boolean wasUpdated) {...};
    */
-  export const update: jest.MockedFunction<typeof chrome.notifications.update>
+  export const update: MockedFunction<typeof chrome.notifications.update>
   /**
    * Clears the specified notification.
    *
@@ -5889,7 +5911,7 @@ export namespace Notifications {
    *
    * function(boolean wasCleared) {...};
    */
-  export const clear: jest.MockedFunction<typeof chrome.notifications.clear>
+  export const clear: MockedFunction<typeof chrome.notifications.clear>
   /**
    * Retrieves all the notifications.
    *
@@ -5901,7 +5923,7 @@ export namespace Notifications {
    *
    * function(object notifications) {...};
    */
-  export const getAll: jest.MockedFunction<typeof chrome.notifications.getAll>
+  export const getAll: MockedFunction<typeof chrome.notifications.getAll>
   /**
    * Retrieves whether the user has enabled notifications from this app or extension.
    *
@@ -5913,7 +5935,7 @@ export namespace Notifications {
    *
    * function( PermissionLevel level) {...};
    */
-  export const getPermissionLevel: jest.MockedFunction<typeof chrome.notifications.getPermissionLevel>
+  export const getPermissionLevel: MockedFunction<typeof chrome.notifications.getPermissionLevel>
 }
 
 ////////////////////
@@ -5947,7 +5969,7 @@ export namespace Omnibox {
     | 'newBackgroundTab'
 
   export interface OmniboxInputEnteredEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (
         text: string,
         disposition: OnInputEnteredDisposition,
@@ -5955,7 +5977,7 @@ export namespace Omnibox {
     > {}
 
   export interface OmniboxInputChangedEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (
         text: string,
         suggest: (suggestResults: SuggestResult[]) => void,
@@ -5963,20 +5985,22 @@ export namespace Omnibox {
     > {}
 
   export interface OmniboxInputStartedEvent
-    extends JestChromeNamespace.events.Event<() => void> {}
+    extends VitestChromeNamespace.events.Event<() => void> {}
 
   export interface OmniboxInputCancelledEvent
-    extends JestChromeNamespace.events.Event<() => void> {}
+    extends VitestChromeNamespace.events.Event<() => void> {}
 
   export interface OmniboxSuggestionDeletedEvent
-    extends JestChromeNamespace.events.Event<(text: string) => void> {}
+    extends VitestChromeNamespace.events.Event<
+      (text: string) => void
+    > {}
 
   /**
    * Sets the description and styling for the default suggestion. The default suggestion is the text that is displayed in the first suggestion row underneath the URL bar.
    *
    * @param suggestion A partial SuggestResult object, without the 'content' parameter.
    */
-  export const setDefaultSuggestion: jest.MockedFunction<typeof chrome.omnibox.setDefaultSuggestion>
+  export const setDefaultSuggestion: MockedFunction<typeof chrome.omnibox.setDefaultSuggestion>
 
   /** User has accepted what is typed into the omnibox. */
   export const onInputEntered: OmniboxInputEnteredEvent
@@ -6006,8 +6030,8 @@ export namespace Omnibox {
  */
 export namespace PageAction {
   export interface PageActionClickedEvent
-    extends JestChromeNamespace.events.Event<
-      (tab: JestChromeNamespace.tabs.Tab) => void
+    extends VitestChromeNamespace.events.Event<
+      (tab: VitestChromeNamespace.tabs.Tab) => void
     > {}
 
   export interface TitleDetails {
@@ -6059,7 +6083,7 @@ export namespace PageAction {
    *
    * @param callback Supported since Chrome 67
    */
-  export const hide: jest.MockedFunction<typeof chrome.pageAction.hide>
+  export const hide: MockedFunction<typeof chrome.pageAction.hide>
   /**
    * Shows the page action. The page action is shown whenever the tab is selected.
    *
@@ -6067,19 +6091,19 @@ export namespace PageAction {
    *
    * @param callback Supported since Chrome 67
    */
-  export const show: jest.MockedFunction<typeof chrome.pageAction.show>
+  export const show: MockedFunction<typeof chrome.pageAction.show>
   /**
    * Sets the title of the page action. This is displayed in a tooltip over the page action.
    *
    * @param callback Supported since Chrome 67
    */
-  export const setTitle: jest.MockedFunction<typeof chrome.pageAction.setTitle>
+  export const setTitle: MockedFunction<typeof chrome.pageAction.setTitle>
   /**
    * Sets the html document to be opened as a popup when the user clicks on the page action's icon.
    *
    * @param callback Supported since Chrome 67
    */
-  export const setPopup: jest.MockedFunction<typeof chrome.pageAction.setPopup>
+  export const setPopup: MockedFunction<typeof chrome.pageAction.setPopup>
   /**
    * Gets the title of the page action.
    *
@@ -6089,7 +6113,7 @@ export namespace PageAction {
    *
    * function(string result) {...};
    */
-  export const getTitle: jest.MockedFunction<typeof chrome.pageAction.getTitle>
+  export const getTitle: MockedFunction<typeof chrome.pageAction.getTitle>
   /**
    * Gets the html document set as the popup for this page action.
    *
@@ -6099,7 +6123,7 @@ export namespace PageAction {
    *
    * function(string result) {...};
    */
-  export const getPopup: jest.MockedFunction<typeof chrome.pageAction.getPopup>
+  export const getPopup: MockedFunction<typeof chrome.pageAction.getPopup>
   /**
    * Sets the icon for the page action. The icon can be specified either as the path to an image file or as the pixel data from a canvas element, or as dictionary of either one of those. Either the path or the imageData property must be specified.
    *
@@ -6107,7 +6131,7 @@ export namespace PageAction {
    *
    * function() {...};
    */
-  export const setIcon: jest.MockedFunction<typeof chrome.pageAction.setIcon>
+  export const setIcon: MockedFunction<typeof chrome.pageAction.setIcon>
 
   /** Fired when a page action icon is clicked. This event will not fire if the page action has a popup. */
   export const onClicked: PageActionClickedEvent
@@ -6140,7 +6164,7 @@ export namespace PageCapture {
    *
    * Parameter mhtmlData: The MHTML data as a Blob.
    */
-  export const saveAsMHTML: jest.MockedFunction<typeof chrome.pageCapture.saveAsMHTML>
+  export const saveAsMHTML: MockedFunction<typeof chrome.pageCapture.saveAsMHTML>
 }
 
 ////////////////////
@@ -6202,7 +6226,7 @@ export namespace Permissions {
    *
    * Parameter result: True if the extension has the specified permissions.
    */
-  export const contains: jest.MockedFunction<typeof chrome.permissions.contains>
+  export const contains: MockedFunction<typeof chrome.permissions.contains>
   /**
    * Gets the extension's current set of permissions.
    *
@@ -6212,7 +6236,7 @@ export namespace Permissions {
    *
    * Parameter permissions: The extension's active permissions.
    */
-  export const getAll: jest.MockedFunction<typeof chrome.permissions.getAll>
+  export const getAll: MockedFunction<typeof chrome.permissions.getAll>
   /**
    * Requests access to the specified permissions. These permissions must be defined in the optional_permissions field of the manifest. If there are any problems requesting the permissions, runtime.lastError will be set.
    *
@@ -6222,7 +6246,7 @@ export namespace Permissions {
    *
    * Parameter granted: True if the user granted the specified permissions.
    */
-  export const request: jest.MockedFunction<typeof chrome.permissions.request>
+  export const request: MockedFunction<typeof chrome.permissions.request>
   /**
    * Removes access to the specified permissions. If there are any problems removing the permissions, runtime.lastError will be set.
    *
@@ -6232,7 +6256,7 @@ export namespace Permissions {
    *
    * Parameter removed: True if the permissions were removed.
    */
-  export const remove: jest.MockedFunction<typeof chrome.permissions.remove>
+  export const remove: MockedFunction<typeof chrome.permissions.remove>
 
   /** Fired when access to permissions has been removed from the extension. */
   export const onRemoved: PermissionsRemovedEvent
@@ -6307,7 +6331,7 @@ export namespace PlatformKeys {
    *
    * Parameter matches: The list of certificates that match the request, that the extension has permission for and, if interactive is true, that were selected by the user.
    */
-  export const selectClientCertificates: jest.MockedFunction<typeof chrome.platformKeys.selectClientCertificates>
+  export const selectClientCertificates: MockedFunction<typeof chrome.platformKeys.selectClientCertificates>
   /**
    * Passes the key pair of certificate for usage with platformKeys.subtleCrypto to callback.
    *
@@ -6323,10 +6347,10 @@ export namespace PlatformKeys {
    *
    * Optional parameter privateKey: Might be null if this extension does not have access to it.
    */
-  export const getKeyPair: jest.MockedFunction<typeof chrome.platformKeys.getKeyPair>
+  export const getKeyPair: MockedFunction<typeof chrome.platformKeys.getKeyPair>
 
   /** An implementation of WebCrypto's SubtleCrypto that allows crypto operations on keys of client certificates that are available to this extension. */
-  export const subtleCrypto: jest.MockedFunction<typeof chrome.platformKeys.subtleCrypto>
+  export const subtleCrypto: MockedFunction<typeof chrome.platformKeys.subtleCrypto>
 
   /**
    * Checks whether details.serverCertificateChain can be trusted for details.hostname according to the trust settings of the platform. Note: The actual behavior of the trust verification is not fully specified and might change in the future. The API implementation verifies certificate expiration, validates the certification path and checks trust by a known CA. The implementation is supposed to respect the EKU serverAuth and to support subject alternative names.
@@ -6335,7 +6359,7 @@ export namespace PlatformKeys {
    *
    * function(object result) {...};
    */
-  export const verifyTLSServerCertificate: jest.MockedFunction<typeof chrome.platformKeys.verifyTLSServerCertificate>
+  export const verifyTLSServerCertificate: MockedFunction<typeof chrome.platformKeys.verifyTLSServerCertificate>
 }
 
 ////////////////////
@@ -6350,10 +6374,10 @@ export namespace PlatformKeys {
  */
 export namespace Power {
   /** Requests that power management be temporarily disabled. |level| describes the degree to which power management should be disabled. If a request previously made by the same app is still active, it will be replaced by the new request. */
-  export const requestKeepAwake: jest.MockedFunction<typeof chrome.power.requestKeepAwake>
+  export const requestKeepAwake: MockedFunction<typeof chrome.power.requestKeepAwake>
 
   /** Releases a request previously made via requestKeepAwake(). */
-  export const releaseKeepAwake: jest.MockedFunction<typeof chrome.power.releaseKeepAwake>
+  export const releaseKeepAwake: MockedFunction<typeof chrome.power.releaseKeepAwake>
 }
 
 ////////////////////
@@ -6395,14 +6419,14 @@ export namespace PrinterProvider {
   }
 
   export interface PrinterRequestedEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (
         resultCallback: (printerInfo: PrinterInfo[]) => void,
       ) => void
     > {}
 
   export interface PrinterInfoRequestedEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (
         device: any,
         resultCallback: (printerInfo?: PrinterInfo) => void,
@@ -6410,7 +6434,7 @@ export namespace PrinterProvider {
     > {}
 
   export interface CapabilityRequestedEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (
         printerId: string,
         resultCallback: (
@@ -6420,7 +6444,7 @@ export namespace PrinterProvider {
     > {}
 
   export interface PrintRequestedEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (
         printJob: PrintJob,
         resultCallback: (result: string) => void,
@@ -6458,44 +6482,44 @@ export namespace PrinterProvider {
 export namespace Privacy {
   export interface Services {
     /** since Chrome 20. */
-    spellingServiceEnabled: JestChromeNamespace.types.ChromeSetting
-    searchSuggestEnabled: JestChromeNamespace.types.ChromeSetting
-    instantEnabled: JestChromeNamespace.types.ChromeSetting
-    alternateErrorPagesEnabled: JestChromeNamespace.types.ChromeSetting
-    safeBrowsingEnabled: JestChromeNamespace.types.ChromeSetting
+    spellingServiceEnabled: VitestChromeNamespace.types.ChromeSetting
+    searchSuggestEnabled: VitestChromeNamespace.types.ChromeSetting
+    instantEnabled: VitestChromeNamespace.types.ChromeSetting
+    alternateErrorPagesEnabled: VitestChromeNamespace.types.ChromeSetting
+    safeBrowsingEnabled: VitestChromeNamespace.types.ChromeSetting
     /** @deprecated since Chrome 70. Please use privacy.services.autofillAddressEnabled and privacy.services.autofillCreditCardEnabled. */
-    autofillEnabled: JestChromeNamespace.types.ChromeSetting
-    translationServiceEnabled: JestChromeNamespace.types.ChromeSetting
+    autofillEnabled: VitestChromeNamespace.types.ChromeSetting
+    translationServiceEnabled: VitestChromeNamespace.types.ChromeSetting
     /** @since Chrome 38. */
-    passwordSavingEnabled: JestChromeNamespace.types.ChromeSetting
+    passwordSavingEnabled: VitestChromeNamespace.types.ChromeSetting
     /** @since Chrome 42. */
-    hotwordSearchEnabled: JestChromeNamespace.types.ChromeSetting
+    hotwordSearchEnabled: VitestChromeNamespace.types.ChromeSetting
     /** @since Chrome 42. */
-    safeBrowsingExtendedReportingEnabled: JestChromeNamespace.types.ChromeSetting
+    safeBrowsingExtendedReportingEnabled: VitestChromeNamespace.types.ChromeSetting
     /** @since Chrome 70. */
-    autofillAddressEnabled: JestChromeNamespace.types.ChromeSetting
+    autofillAddressEnabled: VitestChromeNamespace.types.ChromeSetting
     /** @since Chrome 70. */
-    autofillCreditCardEnabled: JestChromeNamespace.types.ChromeSetting
+    autofillCreditCardEnabled: VitestChromeNamespace.types.ChromeSetting
   }
 
   export interface Network {
-    networkPredictionEnabled: JestChromeNamespace.types.ChromeSetting
+    networkPredictionEnabled: VitestChromeNamespace.types.ChromeSetting
     /** @deprecated since Chrome 48. Please use privacy.network.webRTCIPHandlingPolicy. */
-    webRTCMultipleRoutesEnabled: JestChromeNamespace.types.ChromeSetting
+    webRTCMultipleRoutesEnabled: VitestChromeNamespace.types.ChromeSetting
     /** @deprecated since Chrome 48. Please use privacy.network.webRTCIPHandlingPolicy. */
-    webRTCNonProxiedUdpEnabled: JestChromeNamespace.types.ChromeSetting
+    webRTCNonProxiedUdpEnabled: VitestChromeNamespace.types.ChromeSetting
     /** @since Chrome 48. */
-    webRTCIPHandlingPolicy: JestChromeNamespace.types.ChromeSetting
+    webRTCIPHandlingPolicy: VitestChromeNamespace.types.ChromeSetting
   }
 
   export interface Websites {
-    thirdPartyCookiesAllowed: JestChromeNamespace.types.ChromeSetting
-    referrersEnabled: JestChromeNamespace.types.ChromeSetting
-    hyperlinkAuditingEnabled: JestChromeNamespace.types.ChromeSetting
+    thirdPartyCookiesAllowed: VitestChromeNamespace.types.ChromeSetting
+    referrersEnabled: VitestChromeNamespace.types.ChromeSetting
+    hyperlinkAuditingEnabled: VitestChromeNamespace.types.ChromeSetting
     /** @since Chrome 21. Available on Windows and ChromeOS only. */
-    protectedContentEnabled: JestChromeNamespace.types.ChromeSetting
+    protectedContentEnabled: VitestChromeNamespace.types.ChromeSetting
     /** @since Chrome 65. */
-    doNotTrackEnabled: JestChromeNamespace.types.ChromeSetting
+    doNotTrackEnabled: VitestChromeNamespace.types.ChromeSetting
   }
 
   /** Settings that enable or disable features that require third-party network services provided by Google and your default search provider. */
@@ -6583,11 +6607,11 @@ export namespace Proxy {
   }
 
   export interface ProxyErrorEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (details: ErrorDetails) => void
     > {}
 
-  export const settings: JestChromeNamespace.types.ChromeSetting
+  export const settings: VitestChromeNamespace.types.ChromeSetting
   /** Notifies about proxy errors. */
   export const onProxyError: ProxyErrorEvent
 }
@@ -6723,7 +6747,7 @@ export namespace Serial {
    *
    * function(array of object ports) {...};
    */
-  export const getDevices: jest.MockedFunction<typeof chrome.serial.getDevices>
+  export const getDevices: MockedFunction<typeof chrome.serial.getDevices>
 
   /**
    * @since Chrome 33.
@@ -6742,7 +6766,7 @@ export namespace Serial {
    *
    * function( ConnectionInfo connectionInfo) {...};
    */
-  export const connect: jest.MockedFunction<typeof chrome.serial.connect>
+  export const connect: MockedFunction<typeof chrome.serial.connect>
 
   /**
    * @since Chrome 33.
@@ -6761,7 +6785,7 @@ export namespace Serial {
    *
    * function(boolean result) {...};
    */
-  export const update: jest.MockedFunction<typeof chrome.serial.update>
+  export const update: MockedFunction<typeof chrome.serial.update>
 
   /**
    * @since Chrome 33.
@@ -6778,7 +6802,7 @@ export namespace Serial {
    *
    * function(boolean result) {...};
    */
-  export const disconnect: jest.MockedFunction<typeof chrome.serial.disconnect>
+  export const disconnect: MockedFunction<typeof chrome.serial.disconnect>
 
   /**
    * @since Chrome 33.
@@ -6797,7 +6821,7 @@ export namespace Serial {
    *
    * function() {...};
    */
-  export const setPaused: jest.MockedFunction<typeof chrome.serial.setPaused>
+  export const setPaused: MockedFunction<typeof chrome.serial.setPaused>
 
   /**
    * @since Chrome 33.
@@ -6812,7 +6836,7 @@ export namespace Serial {
    *
    * function( ConnectionInfo connectionInfo) {...};
    */
-  export const getInfo: jest.MockedFunction<typeof chrome.serial.getInfo>
+  export const getInfo: MockedFunction<typeof chrome.serial.getInfo>
 
   /**
    * @since Chrome 33.
@@ -6827,7 +6851,7 @@ export namespace Serial {
    *
    * function(array of ConnectionInfo connectionInfos) {...};
    */
-  export const getConnections: jest.MockedFunction<typeof chrome.serial.getConnections>
+  export const getConnections: MockedFunction<typeof chrome.serial.getConnections>
 
   /**
    * @since Chrome 33.
@@ -6846,7 +6870,7 @@ export namespace Serial {
    *
    * function(object sendInfo) {...};
    */
-  export const send: jest.MockedFunction<typeof chrome.serial.send>
+  export const send: MockedFunction<typeof chrome.serial.send>
 
   /**
    * @description Flushes all bytes in the given connection's input and output buffers.
@@ -6861,7 +6885,7 @@ export namespace Serial {
    *
    * function(boolean result) {...};
    */
-  export const flush: jest.MockedFunction<typeof chrome.serial.flush>
+  export const flush: MockedFunction<typeof chrome.serial.flush>
 
   /**
    * @description Retrieves the state of control signals on a given connection.
@@ -6876,7 +6900,7 @@ export namespace Serial {
    *
    * function(object signals) {...};
    */
-  export const getControlSignals: jest.MockedFunction<typeof chrome.serial.getControlSignals>
+  export const getControlSignals: MockedFunction<typeof chrome.serial.getControlSignals>
 
   /**
    * @description Sets the state of control signals on a given connection.
@@ -6897,7 +6921,7 @@ export namespace Serial {
    *
    * function(boolean result) {...};
    */
-  export const setControlSignals: jest.MockedFunction<typeof chrome.serial.setControlSignals>
+  export const setControlSignals: MockedFunction<typeof chrome.serial.setControlSignals>
 
   /**
    * @since Chrome 45.
@@ -6914,7 +6938,7 @@ export namespace Serial {
    *
    * function(boolean result) {...};
    */
-  export const setBreak: jest.MockedFunction<typeof chrome.serial.setBreak>
+  export const setBreak: MockedFunction<typeof chrome.serial.setBreak>
 
   /**
    * @since Chrome 45.
@@ -6931,7 +6955,7 @@ export namespace Serial {
    *
    * function(boolean result) {...};
    */
-  export const clearBreak: jest.MockedFunction<typeof chrome.serial.clearBreak>
+  export const clearBreak: MockedFunction<typeof chrome.serial.clearBreak>
 }
 
 export namespace Serial.onReceive {
@@ -6955,7 +6979,7 @@ export namespace Serial.onReceive {
    *
    * function(OnReceiveInfo info) {...};
    */
-  export const addListener: jest.MockedFunction<typeof chrome.serial.onReceive.addListener>
+  export const addListener: MockedFunction<typeof chrome.serial.onReceive.addListener>
 }
 
 export namespace Serial.onReceiveError {
@@ -7002,7 +7026,7 @@ export namespace Serial.onReceiveError {
    *
    * function(OnReceiveErrorInfo info) {...};
    */
-  export const addListener: jest.MockedFunction<typeof chrome.serial.onReceiveError.addListener>
+  export const addListener: MockedFunction<typeof chrome.serial.onReceiveError.addListener>
 }
 
 ////////////////////
@@ -7066,7 +7090,7 @@ export namespace Runtime {
     /** The ID of the extension or app that opened the connection, if any. */
     id?: string
     /** The tabs.Tab which opened the connection, if any. This property will only be present when the connection was opened from a tab (including content scripts), and only if the receiver is an extension, not an app. */
-    tab?: JestChromeNamespace.tabs.Tab
+    tab?: VitestChromeNamespace.tabs.Tab
     /**
      * The frame that opened the connection. 0 for top-level frames, positive for child frames. This will only be set when tab is set.
      *
@@ -7087,10 +7111,10 @@ export namespace Runtime {
     tlsChannelId?: string
     /**
      * The origin of the page or frame that opened the connection. It can vary from the url property (e.g., about:blank) or can be opaque (e.g., sandboxed iframes). This is useful for identifying if the origin can be trusted if we can't immediately tell from the URL.
-     *    
+     *
      * @since Chrome 80.
-    */
-    origin?: string;
+     */
+    origin?: string
   }
 
   /**
@@ -7157,15 +7181,17 @@ export namespace Runtime {
     | 'update_available'
 
   export interface PortDisconnectEvent
-    extends JestChromeNamespace.events.Event<(port: Port) => void> {}
+    extends VitestChromeNamespace.events.Event<
+      (port: Port) => void
+    > {}
 
   export interface PortMessageEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (message: any, port: Port) => void
     > {}
 
   export interface ExtensionMessageEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (
         message: any,
         sender: MessageSender,
@@ -7174,21 +7200,25 @@ export namespace Runtime {
     > {}
 
   export interface ExtensionConnectEvent
-    extends JestChromeNamespace.events.Event<(port: Port) => void> {}
+    extends VitestChromeNamespace.events.Event<
+      (port: Port) => void
+    > {}
 
   export interface RuntimeInstalledEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (details: InstalledDetails) => void
     > {}
 
   export interface RuntimeEvent
-    extends JestChromeNamespace.events.Event<() => void> {}
+    extends VitestChromeNamespace.events.Event<() => void> {}
 
   export interface RuntimeRestartRequiredEvent
-    extends JestChromeNamespace.events.Event<(reason: string) => void> {}
+    extends VitestChromeNamespace.events.Event<
+      (reason: string) => void
+    > {}
 
   export interface RuntimeUpdateAvailableEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (details: UpdateAvailableDetails) => void
     > {}
 
@@ -7298,7 +7328,7 @@ export namespace Runtime {
       actions?: {
         type: string
       }[]
-      conditions?: JestChromeNamespace.declarativeContent.PageStateMatcherProperties[]
+      conditions?: VitestChromeNamespace.declarativeContent.PageStateMatcherProperties[]
     }[]
     externally_connectable?: {
       ids?: string[]
@@ -7405,7 +7435,7 @@ export namespace Runtime {
    *
    * @since Chrome 26.
    */
-  export const connect: jest.MockedFunction<typeof chrome.runtime.connect>
+  export const connect: MockedFunction<typeof chrome.runtime.connect>
 
   /**
    * Connects to a native application in the host machine.
@@ -7414,24 +7444,24 @@ export namespace Runtime {
    *
    * @param application The name of the registered application to connect to.
    */
-  export const connectNative: jest.MockedFunction<typeof chrome.runtime.connectNative>
+  export const connectNative: MockedFunction<typeof chrome.runtime.connectNative>
 
   /** Retrieves the JavaScript 'window' object for the background page running inside the current extension/app. If the background page is an event page, the system will ensure it is loaded before calling the callback. If there is no background page, an error is set. */
-  export const getBackgroundPage: jest.MockedFunction<typeof chrome.runtime.getBackgroundPage>
+  export const getBackgroundPage: MockedFunction<typeof chrome.runtime.getBackgroundPage>
 
   /**
    * Returns details about the app or extension from the manifest. The object returned is a serialization of the full manifest file.
    *
    * @returns The manifest details.
    */
-  export const getManifest: jest.MockedFunction<typeof chrome.runtime.getManifest>
+  export const getManifest: MockedFunction<typeof chrome.runtime.getManifest>
 
   /**
    * Returns a DirectoryEntry for the package directory.
    *
    * @since Chrome 29.
    */
-  export const getPackageDirectoryEntry: jest.MockedFunction<typeof chrome.runtime.getPackageDirectoryEntry>
+  export const getPackageDirectoryEntry: MockedFunction<typeof chrome.runtime.getPackageDirectoryEntry>
 
   /**
    * Returns information about the current platform.
@@ -7440,21 +7470,21 @@ export namespace Runtime {
    *
    * @param callback Called with results
    */
-  export const getPlatformInfo: jest.MockedFunction<typeof chrome.runtime.getPlatformInfo>
+  export const getPlatformInfo: MockedFunction<typeof chrome.runtime.getPlatformInfo>
 
   /**
    * Converts a relative path within an app/extension install directory to a fully-qualified URL.
    *
    * @param path A path to a resource within an app/extension expressed relative to its install directory.
    */
-  export const getURL: jest.MockedFunction<typeof chrome.runtime.getURL>
+  export const getURL: MockedFunction<typeof chrome.runtime.getURL>
 
   /**
    * Reloads the app or extension.
    *
    * @since Chrome 25.
    */
-  export const reload: jest.MockedFunction<typeof chrome.runtime.reload>
+  export const reload: MockedFunction<typeof chrome.runtime.reload>
 
   /**
    * Requests an update check for this app/extension.
@@ -7467,14 +7497,14 @@ export namespace Runtime {
    *
    * Optional parameter details: If an update is available, this contains more information about the available update.
    */
-  export const requestUpdateCheck: jest.MockedFunction<typeof chrome.runtime.requestUpdateCheck>
+  export const requestUpdateCheck: MockedFunction<typeof chrome.runtime.requestUpdateCheck>
 
   /**
    * Restart the ChromeOS device when the app runs in kiosk mode. Otherwise, it's no-op.
    *
    * @since Chrome 32.
    */
-  export const restart: jest.MockedFunction<typeof chrome.runtime.restart>
+  export const restart: MockedFunction<typeof chrome.runtime.restart>
 
   /**
    * Sends a single message to event listeners within your extension/app or a different extension/app. Similar to runtime.connect but only sends a single message, with an optional response. If sending to your extension, the runtime.onMessage event will be fired in each page, or runtime.onMessageExternal, if a different extension. Note that extensions cannot send messages to content scripts using this method. To send messages to content scripts, use tabs.sendMessage.
@@ -7485,7 +7515,7 @@ export namespace Runtime {
    *
    * Parameter response: The JSON response object sent by the handler of the message. If an error occurs while connecting to the extension, the callback will be called with no arguments and runtime.lastError will be set to the error message.
    */
-  export const sendMessage: jest.MockedFunction<typeof chrome.runtime.sendMessage>
+  export const sendMessage: MockedFunction<typeof chrome.runtime.sendMessage>
 
   /**
    * Send a single message to a native application.
@@ -7500,7 +7530,7 @@ export namespace Runtime {
    *
    * Parameter response: The response message sent by the native messaging host. If an error occurs while connecting to the native messaging host, the callback will be called with no arguments and runtime.lastError will be set to the error message.
    */
-  export const sendNativeMessage: jest.MockedFunction<typeof chrome.runtime.sendNativeMessage>
+  export const sendNativeMessage: MockedFunction<typeof chrome.runtime.sendNativeMessage>
   /**
    * Sets the URL to be visited upon uninstallation. This may be used to clean up server-side data, do analytics, and implement surveys. Maximum 255 characters.
    *
@@ -7512,7 +7542,7 @@ export namespace Runtime {
    *
    * @param callback Called when the uninstall URL is set. If the given URL is invalid, runtime.lastError will be set.
    */
-  export const setUninstallURL: jest.MockedFunction<typeof chrome.runtime.setUninstallURL>
+  export const setUninstallURL: MockedFunction<typeof chrome.runtime.setUninstallURL>
   /**
    * Open your Extension's options page, if possible.
    *
@@ -7522,7 +7552,7 @@ export namespace Runtime {
    *
    * @since Chrome 42.
    */
-  export const openOptionsPage: jest.MockedFunction<typeof chrome.runtime.openOptionsPage>
+  export const openOptionsPage: MockedFunction<typeof chrome.runtime.openOptionsPage>
 
   /**
    * Fired when a connection is made from either an extension process or a content script.
@@ -7598,13 +7628,13 @@ export namespace ScriptBadge {
   }
 
   export interface ScriptBadgeClickedEvent
-    extends JestChromeNamespace.events.Event<
-      (tab: JestChromeNamespace.tabs.Tab) => void
+    extends VitestChromeNamespace.events.Event<
+      (tab: VitestChromeNamespace.tabs.Tab) => void
     > {}
 
-  export const getPopup: jest.MockedFunction<typeof chrome.scriptBadge.getPopup>
-  export const getAttention: jest.MockedFunction<typeof chrome.scriptBadge.getAttention>
-  export const setPopup: jest.MockedFunction<typeof chrome.scriptBadge.setPopup>
+  export const getPopup: MockedFunction<typeof chrome.scriptBadge.getPopup>
+  export const getAttention: MockedFunction<typeof chrome.scriptBadge.getAttention>
+  export const setPopup: MockedFunction<typeof chrome.scriptBadge.setPopup>
 
   export const onClicked: ScriptBadgeClickedEvent
 }
@@ -7637,13 +7667,13 @@ export namespace Sessions {
      *
      * The tabs.Tab, if this entry describes a tab. Either this or sessions.Session.window will be set.
      */
-    tab?: JestChromeNamespace.tabs.Tab
+    tab?: VitestChromeNamespace.tabs.Tab
     /**
      * Optional.
      *
      * The windows.Window, if this entry describes a window. Either this or sessions.Session.tab will be set.
      */
-    window?: JestChromeNamespace.windows.Window
+    window?: VitestChromeNamespace.windows.Window
   }
 
   export interface Device {
@@ -7654,7 +7684,7 @@ export namespace Sessions {
   }
 
   export interface SessionChangedEvent
-    extends JestChromeNamespace.events.Event<() => void> {}
+    extends VitestChromeNamespace.events.Event<() => void> {}
 
   /** The maximum number of sessions.Session that will be included in a requested list. */
   export const MAX_SESSION_RESULTS: number
@@ -7666,7 +7696,7 @@ export namespace Sessions {
    *
    * Parameter sessions: The list of closed entries in reverse order that they were closed (the most recently closed tab or window will be at index 0). The entries may contain either tabs or windows.
    */
-  export const getRecentlyClosed: jest.MockedFunction<typeof chrome.sessions.getRecentlyClosed>
+  export const getRecentlyClosed: MockedFunction<typeof chrome.sessions.getRecentlyClosed>
 
   /**
    * Retrieves all devices with synced sessions.
@@ -7675,7 +7705,7 @@ export namespace Sessions {
    *
    * Parameter devices: The list of sessions.Device objects for each synced session, sorted in order from device with most recently modified session to device with least recently modified session. tabs.Tab objects are sorted by recency in the windows.Window of the sessions.Session objects.
    */
-  export const getDevices: jest.MockedFunction<typeof chrome.sessions.getDevices>
+  export const getDevices: MockedFunction<typeof chrome.sessions.getDevices>
 
   /**
    * Reopens a windows.Window or tabs.Tab, with an optional callback to run when the entry has been restored.
@@ -7688,7 +7718,7 @@ export namespace Sessions {
    *
    * Parameter restoredSession: A sessions.Session containing the restored windows.Window or tabs.Tab object.
    */
-  export const restore: jest.MockedFunction<typeof chrome.sessions.restore>
+  export const restore: MockedFunction<typeof chrome.sessions.restore>
 
   /** Fired when recently closed tabs and/or windows are changed. This event does not monitor synced sessions changes. */
   export const onChanged: SessionChangedEvent
@@ -7718,8 +7748,8 @@ export namespace Storage {
      *
      * Parameter bytesInUse: Amount of space being used in storage, in bytes.
      */
-    getBytesInUse: jest.MockedFunction<
-      chrome.storage.StorageArea["getBytesInUse"]
+    getBytesInUse: MockedFunction<
+      chrome.storage.StorageArea['getBytesInUse']
     >
     /**
      * Removes all items from storage.
@@ -7728,7 +7758,7 @@ export namespace Storage {
      *
      * Callback on success, or on failure (in which case runtime.lastError will be set).
      */
-    clear: jest.MockedFunction<chrome.storage.StorageArea["clear"]>
+    clear: MockedFunction<chrome.storage.StorageArea['clear']>
     /**
      * Sets multiple items.
      *
@@ -7740,7 +7770,7 @@ export namespace Storage {
      *
      * Callback on success, or on failure (in which case runtime.lastError will be set).
      */
-    set: jest.MockedFunction<chrome.storage.StorageArea["set"]>
+    set: MockedFunction<chrome.storage.StorageArea['set']>
     /**
      * Removes one or more items from storage.
      *
@@ -7750,7 +7780,7 @@ export namespace Storage {
      *
      * Callback on success, or on failure (in which case runtime.lastError will be set).
      */
-    remove: jest.MockedFunction<chrome.storage.StorageArea["remove"]>
+    remove: MockedFunction<chrome.storage.StorageArea['remove']>
     /**
      * Gets one or more items from storage.
      *
@@ -7762,7 +7792,7 @@ export namespace Storage {
      *
      * Parameter items: Record<string, any> with items in their key-value mappings.
      */
-    get: jest.MockedFunction<chrome.storage.StorageArea["get"]>
+    get: MockedFunction<chrome.storage.StorageArea['get']>
   }
 
   export interface StorageChange {
@@ -7803,7 +7833,7 @@ export namespace Storage {
   }
 
   export interface StorageChangedEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (
         changes: { [key: string]: StorageChange },
         areaName: string,
@@ -7869,21 +7899,21 @@ export namespace Socket {
     address: string
   }
 
-  export const create: jest.MockedFunction<typeof chrome.socket.create>
-  export const destroy: jest.MockedFunction<typeof chrome.socket.destroy>
-  export const connect: jest.MockedFunction<typeof chrome.socket.connect>
-  export const bind: jest.MockedFunction<typeof chrome.socket.bind>
-  export const disconnect: jest.MockedFunction<typeof chrome.socket.disconnect>
-  export const read: jest.MockedFunction<typeof chrome.socket.read>
-  export const write: jest.MockedFunction<typeof chrome.socket.write>
-  export const recvFrom: jest.MockedFunction<typeof chrome.socket.recvFrom>
-  export const sendTo: jest.MockedFunction<typeof chrome.socket.sendTo>
-  export const listen: jest.MockedFunction<typeof chrome.socket.listen>
-  export const accept: jest.MockedFunction<typeof chrome.socket.accept>
-  export const setKeepAlive: jest.MockedFunction<typeof chrome.socket.setKeepAlive>
-  export const setNoDelay: jest.MockedFunction<typeof chrome.socket.setNoDelay>
-  export const getInfo: jest.MockedFunction<typeof chrome.socket.getInfo>
-  export const getNetworkList: jest.MockedFunction<typeof chrome.socket.getNetworkList>
+  export const create: MockedFunction<typeof chrome.socket.create>
+  export const destroy: MockedFunction<typeof chrome.socket.destroy>
+  export const connect: MockedFunction<typeof chrome.socket.connect>
+  export const bind: MockedFunction<typeof chrome.socket.bind>
+  export const disconnect: MockedFunction<typeof chrome.socket.disconnect>
+  export const read: MockedFunction<typeof chrome.socket.read>
+  export const write: MockedFunction<typeof chrome.socket.write>
+  export const recvFrom: MockedFunction<typeof chrome.socket.recvFrom>
+  export const sendTo: MockedFunction<typeof chrome.socket.sendTo>
+  export const listen: MockedFunction<typeof chrome.socket.listen>
+  export const accept: MockedFunction<typeof chrome.socket.accept>
+  export const setKeepAlive: MockedFunction<typeof chrome.socket.setKeepAlive>
+  export const setNoDelay: MockedFunction<typeof chrome.socket.setNoDelay>
+  export const getInfo: MockedFunction<typeof chrome.socket.getInfo>
+  export const getNetworkList: MockedFunction<typeof chrome.socket.getNetworkList>
 }
 
 ////////////////////
@@ -7931,7 +7961,7 @@ export namespace System.cpu {
   }
 
   /** Queries basic CPU information of the system. */
-  export const getInfo: jest.MockedFunction<typeof chrome.system.cpu.getInfo>
+  export const getInfo: MockedFunction<typeof chrome.system.cpu.getInfo>
 }
 
 ////////////////////
@@ -7953,7 +7983,7 @@ export namespace System.memory {
   }
 
   /** Get physical memory information. */
-  export const getInfo: jest.MockedFunction<typeof chrome.system.memory.getInfo>
+  export const getInfo: MockedFunction<typeof chrome.system.memory.getInfo>
 }
 
 ////////////////////
@@ -7994,15 +8024,17 @@ export namespace System.storage {
   }
 
   export interface SystemStorageAttachedEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (info: StorageUnitInfo) => void
     > {}
 
   export interface SystemStorageDetachedEvent
-    extends JestChromeNamespace.events.Event<(id: string) => void> {}
+    extends VitestChromeNamespace.events.Event<
+      (id: string) => void
+    > {}
 
   /** Get the storage information from the system. The argument passed to the callback is an array of StorageUnitInfo objects. */
-  export const getInfo: jest.MockedFunction<typeof chrome.system.storage.getInfo>
+  export const getInfo: MockedFunction<typeof chrome.system.storage.getInfo>
   /**
    * Ejects a removable storage device.
    *
@@ -8010,13 +8042,13 @@ export namespace System.storage {
    *
    * Parameter result: success: The ejection command is successful -- the application can prompt the user to remove the device; in_use: The device is in use by another application. The ejection did not succeed; the user should not remove the device until the other application is done with the device; no_such_device: There is no such device known. failure: The ejection command failed.
    */
-  export const ejectDevice: jest.MockedFunction<typeof chrome.system.storage.ejectDevice>
+  export const ejectDevice: MockedFunction<typeof chrome.system.storage.ejectDevice>
   /**
    * Get the available capacity of a specified |id| storage device. The |id| is the transient device ID from StorageUnitInfo.
    *
    * @since Dev channel only.
    */
-  export const getAvailableCapacity: jest.MockedFunction<typeof chrome.system.storage.getAvailableCapacity>
+  export const getAvailableCapacity: MockedFunction<typeof chrome.system.storage.getAvailableCapacity>
 
   /** Fired when a new removable storage is attached to the system. */
   export const onAttached: SystemStorageAttachedEvent
@@ -8410,7 +8442,7 @@ export namespace System.display {
    *
    * @param callback The callback to invoke with the results.
    */
-  export const getInfo: jest.MockedFunction<typeof chrome.system.display.getInfo>
+  export const getInfo: MockedFunction<typeof chrome.system.display.getInfo>
 
   /**
    * @requires(CrOS Kiosk apps | WebUI) This is only available to Chrome OS Kiosk apps and Web UI.
@@ -8423,7 +8455,7 @@ export namespace System.display {
    *
    * @param callback The callback to invoke with the results.
    */
-  export const getDisplayLayout: jest.MockedFunction<typeof chrome.system.display.getDisplayLayout>
+  export const getDisplayLayout: MockedFunction<typeof chrome.system.display.getDisplayLayout>
 
   /**
    * @requires(CrOS Kiosk apps | WebUI) This is only available to Chrome OS Kiosk apps and Web UI.
@@ -8442,7 +8474,7 @@ export namespace System.display {
    *
    * @param {() => void} [callback] Empty function called when the function finishes. To find out whether the function succeeded, runtime.lastError should be queried.
    */
-  export const setDisplayProperties: jest.MockedFunction<typeof chrome.system.display.setDisplayProperties>
+  export const setDisplayProperties: MockedFunction<typeof chrome.system.display.setDisplayProperties>
 
   /**
    * @requires(CrOS Kiosk apps | WebUI) This is only available to Chrome OS Kiosk apps and Web UI.
@@ -8463,7 +8495,7 @@ export namespace System.display {
    *
    * @param callback Empty function called when the function finishes. To find out whether the function succeeded, runtime.lastError should be queried.
    */
-  export const setDisplayLayout: jest.MockedFunction<typeof chrome.system.display.setDisplayLayout>
+  export const setDisplayLayout: MockedFunction<typeof chrome.system.display.setDisplayLayout>
 
   /**
    * @requires(CrOS Kiosk apps | WebUI) This is only available to Chrome OS Kiosk apps and Web UI.
@@ -8480,7 +8512,7 @@ export namespace System.display {
    *
    * @param {boolean} enabled True if unified desktop should be enabled.
    */
-  export const enableUnifiedDesktop: jest.MockedFunction<typeof chrome.system.display.enableUnifiedDesktop>
+  export const enableUnifiedDesktop: MockedFunction<typeof chrome.system.display.enableUnifiedDesktop>
   /**
    * Starts overscan calibration for a display.
    *
@@ -8492,7 +8524,7 @@ export namespace System.display {
    *
    * @param id The display's unique identifier.
    */
-  export const overscanCalibrationStart: jest.MockedFunction<typeof chrome.system.display.overscanCalibrationStart>
+  export const overscanCalibrationStart: MockedFunction<typeof chrome.system.display.overscanCalibrationStart>
   /**
    * Adjusts the current overscan insets for a display.
    *
@@ -8508,7 +8540,7 @@ export namespace System.display {
    *
    * @param delta The amount to change the overscan insets.
    */
-  export const overscanCalibrationAdjust: jest.MockedFunction<typeof chrome.system.display.overscanCalibrationAdjust>
+  export const overscanCalibrationAdjust: MockedFunction<typeof chrome.system.display.overscanCalibrationAdjust>
 
   /**
    * Resets the overscan insets for a display to the last saved value (i.e before Start was called).
@@ -8517,7 +8549,7 @@ export namespace System.display {
    *
    * @param id The display's unique identifier.
    */
-  export const overscanCalibrationReset: jest.MockedFunction<typeof chrome.system.display.overscanCalibrationReset>
+  export const overscanCalibrationReset: MockedFunction<typeof chrome.system.display.overscanCalibrationReset>
 
   /**
    * Complete overscan adjustments for a display by saving the current values and hiding the overlay.
@@ -8526,7 +8558,7 @@ export namespace System.display {
    *
    * @param id The display's unique identifier.
    */
-  export const overscanCalibrationComplete: jest.MockedFunction<typeof chrome.system.display.overscanCalibrationComplete>
+  export const overscanCalibrationComplete: MockedFunction<typeof chrome.system.display.overscanCalibrationComplete>
 
   /**
    * Displays the native touch calibration UX for the display with **id** as display id.
@@ -8543,7 +8575,7 @@ export namespace System.display {
    *
    * @param callback Optional callback to inform the caller that the touch calibration has ended. The argument of the callback informs if the calibration was a success or not.
    */
-  export const showNativeTouchCalibration: jest.MockedFunction<typeof chrome.system.display.showNativeTouchCalibration>
+  export const showNativeTouchCalibration: MockedFunction<typeof chrome.system.display.showNativeTouchCalibration>
 
   /**
    * Starts custom touch calibration for a display.
@@ -8556,7 +8588,7 @@ export namespace System.display {
    *
    * @param id The display's unique identifier.
    */
-  export const startCustomTouchCalibration: jest.MockedFunction<typeof chrome.system.display.startCustomTouchCalibration>
+  export const startCustomTouchCalibration: MockedFunction<typeof chrome.system.display.startCustomTouchCalibration>
 
   /**
    * Sets the touch calibration pairs for a display.
@@ -8575,7 +8607,7 @@ export namespace System.display {
    *
    * @throws Error
    */
-  export const completeCustomTouchCalibration: jest.MockedFunction<typeof chrome.system.display.completeCustomTouchCalibration>
+  export const completeCustomTouchCalibration: MockedFunction<typeof chrome.system.display.completeCustomTouchCalibration>
 
   /**
    * Resets the touch calibration for the display and brings it back to its default state by clearing any touch calibration data associated with the display.
@@ -8584,7 +8616,7 @@ export namespace System.display {
    *
    * @param id The display's unique identifier.
    */
-  export const clearTouchCalibration: jest.MockedFunction<typeof chrome.system.display.clearTouchCalibration>
+  export const clearTouchCalibration: MockedFunction<typeof chrome.system.display.clearTouchCalibration>
 
   /**
    * @requires(CrOS Kiosk app) Chrome OS Kiosk apps only
@@ -8601,12 +8633,12 @@ export namespace System.display {
    *
    * mirroring destination displays.
    */
-  export const setMirrorMode: jest.MockedFunction<typeof chrome.system.display.setMirrorMode>
+  export const setMirrorMode: MockedFunction<typeof chrome.system.display.setMirrorMode>
 
   /**
    *  Fired when anything changes to the display configuration.
    */
-  export const onDisplayChanged: JestChromeNamespace.events.Event<() => void>
+  export const onDisplayChanged: VitestChromeNamespace.events.Event<() => void>
 }
 
 ////////////////////
@@ -8645,7 +8677,7 @@ export namespace TabCapture {
   }
 
   export interface CaptureStatusChangedEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (info: CaptureInfo) => void
     > {}
 
@@ -8656,13 +8688,13 @@ export namespace TabCapture {
    *
    * @param callback Callback with either the tab capture stream or null.
    */
-  export const capture: jest.MockedFunction<typeof chrome.tabCapture.capture>
+  export const capture: MockedFunction<typeof chrome.tabCapture.capture>
   /**
    * Returns a list of tabs that have requested capture or are being captured, i.e. status != stopped and status != error. This allows extensions to inform the user that there is an existing tab capture that would prevent a new tab capture from succeeding (or to prevent redundant requests for the same tab).
    *
    * @param callback Callback invoked with CaptureInfo[] for captured tabs.
    */
-  export const getCapturedTabs: jest.MockedFunction<typeof chrome.tabCapture.getCapturedTabs>
+  export const getCapturedTabs: MockedFunction<typeof chrome.tabCapture.getCapturedTabs>
 
   /** Event fired when the capture status of a tab changes. This allows extension authors to keep track of the capture status of tabs to keep UI elements like page actions in sync. */
   export const onStatusChanged: CaptureStatusChangedEvent
@@ -9228,17 +9260,17 @@ export namespace Tabs {
   }
 
   export interface TabHighlightedEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (highlightInfo: TabHighlightInfo) => void
     > {}
 
   export interface TabRemovedEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (tabId: number, removeInfo: TabRemoveInfo) => void
     > {}
 
   export interface TabUpdatedEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (
         tabId: number,
         changeInfo: TabChangeInfo,
@@ -9247,40 +9279,42 @@ export namespace Tabs {
     > {}
 
   export interface TabAttachedEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (tabId: number, attachInfo: TabAttachInfo) => void
     > {}
 
   export interface TabMovedEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (tabId: number, moveInfo: TabMoveInfo) => void
     > {}
 
   export interface TabDetachedEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (tabId: number, detachInfo: TabDetachInfo) => void
     > {}
 
   export interface TabCreatedEvent
-    extends JestChromeNamespace.events.Event<(tab: Tab) => void> {}
+    extends VitestChromeNamespace.events.Event<
+      (tab: Tab) => void
+    > {}
 
   export interface TabActivatedEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (activeInfo: TabActiveInfo) => void
     > {}
 
   export interface TabReplacedEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (addedTabId: number, removedTabId: number) => void
     > {}
 
   export interface TabSelectedEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (tabId: number, selectInfo: TabWindowInfo) => void
     > {}
 
   export interface TabZoomChangeEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (ZoomChangeInfo: ZoomChangeInfo) => void
     > {}
 
@@ -9293,25 +9327,25 @@ export namespace Tabs {
    *
    * Parameter result: The result of the script in every injected frame.
    */
-  export const executeScript: jest.MockedFunction<typeof chrome.tabs.executeScript>
+  export const executeScript: MockedFunction<typeof chrome.tabs.executeScript>
 
   /** Retrieves details about the specified tab. */
-  export const get: jest.MockedFunction<typeof chrome.tabs.get>
+  export const get: MockedFunction<typeof chrome.tabs.get>
   /**
    * Gets details about all tabs in the specified window.
    *
    * @deprecated since Chrome 33. Please use tabs.query {windowId: windowId}.
    */
-  export const getAllInWindow: jest.MockedFunction<typeof chrome.tabs.getAllInWindow>
+  export const getAllInWindow: MockedFunction<typeof chrome.tabs.getAllInWindow>
 
   /** Gets the tab that this script call is being made from. May be undefined if called from a non-tab context (for example: a background page or popup view). */
-  export const getCurrent: jest.MockedFunction<typeof chrome.tabs.getCurrent>
+  export const getCurrent: MockedFunction<typeof chrome.tabs.getCurrent>
   /**
    * Gets the tab that is selected in the specified window.
    *
    * @deprecated since Chrome 33. Please use tabs.query {active: true}.
    */
-  export const getSelected: jest.MockedFunction<typeof chrome.tabs.getSelected>
+  export const getSelected: MockedFunction<typeof chrome.tabs.getSelected>
 
   /**
    * Creates a new tab.
@@ -9320,7 +9354,7 @@ export namespace Tabs {
    *
    * Parameter tab: Details about the created tab. Will contain the ID of the new tab.
    */
-  export const create: jest.MockedFunction<typeof chrome.tabs.create>
+  export const create: MockedFunction<typeof chrome.tabs.create>
   /**
    * Moves one or more tabs to a new position within its window, or to a new window. Note that tabs can only be moved to and from normal (window.type === "normal") windows.
    *
@@ -9330,7 +9364,7 @@ export namespace Tabs {
    *
    * Parameter tab: Details about the moved tab.
    */
-  export const move: jest.MockedFunction<typeof chrome.tabs.move>
+  export const move: MockedFunction<typeof chrome.tabs.move>
 
   /**
    * Modifies the properties of a tab. Properties that are not specified in updateProperties are not modified.
@@ -9339,7 +9373,7 @@ export namespace Tabs {
    *
    * Optional parameter tab: Details about the updated tab. The tabs.Tab object doesn't contain url, title and favIconUrl if the "tabs" permission has not been requested.
    */
-  export const update: jest.MockedFunction<typeof chrome.tabs.update>
+  export const update: MockedFunction<typeof chrome.tabs.update>
 
   /**
    * Closes a tab.
@@ -9354,7 +9388,7 @@ export namespace Tabs {
    *
    * Parameter dataUrl: A data URL which encodes an image of the visible area of the captured tab. May be assigned to the 'src' property of an HTML Image element for display.
    */
-  export const captureVisibleTab: jest.MockedFunction<typeof chrome.tabs.captureVisibleTab>
+  export const captureVisibleTab: MockedFunction<typeof chrome.tabs.captureVisibleTab>
 
   /**
    * Reload a tab.
@@ -9363,7 +9397,7 @@ export namespace Tabs {
    *
    * @param tabId The ID of the tab to reload; defaults to the selected tab of the current window.
    */
-  export const reload: jest.MockedFunction<typeof chrome.tabs.reload>
+  export const reload: MockedFunction<typeof chrome.tabs.reload>
 
   /**
    * Duplicates a tab.
@@ -9376,13 +9410,13 @@ export namespace Tabs {
    *
    * Optional parameter tab: Details about the duplicated tab. The tabs.Tab object doesn't contain url, title and favIconUrl if the "tabs" permission has not been requested.
    */
-  export const duplicate: jest.MockedFunction<typeof chrome.tabs.duplicate>
+  export const duplicate: MockedFunction<typeof chrome.tabs.duplicate>
   /**
    * Sends a single message to the content script(s) in the specified tab, with an optional callback to run when a response is sent back. The runtime.onMessage event is fired in each content script running in the specified tab for the current extension.
    *
    * @since Chrome 20.
    */
-  export const sendMessage: jest.MockedFunction<typeof chrome.tabs.sendMessage>
+  export const sendMessage: MockedFunction<typeof chrome.tabs.sendMessage>
 
   /**
    * Sends a single request to the content script(s) in the specified tab, with an optional callback to run when a response is sent back. The extension.onRequest event is fired in each content script running in the specified tab for the current extension.
@@ -9393,9 +9427,9 @@ export namespace Tabs {
    *
    * Parameter response: The JSON response object sent by the handler of the request. If an error occurs while connecting to the specified tab, the callback will be called with no arguments and runtime.lastError will be set to the error message.
    */
-  export const sendRequest: jest.MockedFunction<typeof chrome.tabs.sendRequest>
+  export const sendRequest: MockedFunction<typeof chrome.tabs.sendRequest>
   /** Connects to the content script(s) in the specified tab. The runtime.onConnect event is fired in each content script running in the specified tab for the current extension. */
-  export const connect: jest.MockedFunction<typeof chrome.tabs.connect>
+  export const connect: MockedFunction<typeof chrome.tabs.connect>
   /**
    * Injects CSS into a page. For details, see the programmatic injection section of the content scripts doc.
    *
@@ -9403,7 +9437,7 @@ export namespace Tabs {
    *
    * @param callback Optional. Called when all the CSS has been inserted.
    */
-  export const insertCSS: jest.MockedFunction<typeof chrome.tabs.insertCSS>
+  export const insertCSS: MockedFunction<typeof chrome.tabs.insertCSS>
 
   /**
    * Highlights the given tabs.
@@ -9414,13 +9448,13 @@ export namespace Tabs {
    *
    * Parameter window: Contains details about the window whose tabs were highlighted.
    */
-  export const highlight: jest.MockedFunction<typeof chrome.tabs.highlight>
+  export const highlight: MockedFunction<typeof chrome.tabs.highlight>
   /**
    * Gets all tabs that have the specified properties, or all tabs if no properties are specified.
    *
    * @since Chrome 16.
    */
-  export const query: jest.MockedFunction<typeof chrome.tabs.query>
+  export const query: MockedFunction<typeof chrome.tabs.query>
   /**
    * Detects the primary language of the content in a tab.
    *
@@ -9428,7 +9462,7 @@ export namespace Tabs {
    *
    * Parameter language: An ISO language code such as en or fr. For a complete list of languages supported by this method, see kLanguageInfoTable. The 2nd to 4th columns will be checked and the first non-NULL value will be returned except for Simplified Chinese for which zh-CN will be returned. For an unknown language, und will be returned.
    */
-  export const detectLanguage: jest.MockedFunction<typeof chrome.tabs.detectLanguage>
+  export const detectLanguage: MockedFunction<typeof chrome.tabs.detectLanguage>
 
   /**
    * Zooms a specified tab.
@@ -9439,7 +9473,7 @@ export namespace Tabs {
    *
    * @param callback Optional. Called after the zoom factor has been changed.
    */
-  export const setZoom: jest.MockedFunction<typeof chrome.tabs.setZoom>
+  export const setZoom: MockedFunction<typeof chrome.tabs.setZoom>
 
   /**
    * Gets the current zoom factor of a specified tab.
@@ -9450,7 +9484,7 @@ export namespace Tabs {
    *
    * Parameter zoomFactor: The tab's current zoom factor.
    */
-  export const getZoom: jest.MockedFunction<typeof chrome.tabs.getZoom>
+  export const getZoom: MockedFunction<typeof chrome.tabs.getZoom>
 
   /**
    * Sets the zoom settings for a specified tab, which define how zoom changes are handled. These settings are reset to defaults upon navigating the tab.
@@ -9461,7 +9495,7 @@ export namespace Tabs {
    *
    * @param callback Optional. Called after the zoom settings have been changed.
    */
-  export const setZoomSettings: jest.MockedFunction<typeof chrome.tabs.setZoomSettings>
+  export const setZoomSettings: MockedFunction<typeof chrome.tabs.setZoomSettings>
 
   /**
    * Gets the current zoom settings of a specified tab.
@@ -9472,7 +9506,7 @@ export namespace Tabs {
    *
    * Paramater zoomSettings: The tab's current zoom settings.
    */
-  export const getZoomSettings: jest.MockedFunction<typeof chrome.tabs.getZoomSettings>
+  export const getZoomSettings: MockedFunction<typeof chrome.tabs.getZoomSettings>
 
   /**
    * Discards a tab from memory. Discarded tabs are still visible on the tab strip and are reloaded when activated.
@@ -9483,7 +9517,7 @@ export namespace Tabs {
    *
    * @param callback Called after the operation is completed.
    */
-  export const discard: jest.MockedFunction<typeof chrome.tabs.discard>
+  export const discard: MockedFunction<typeof chrome.tabs.discard>
 
   /**
    * Fired when the highlighted or selected tabs in a window changes.
@@ -9570,7 +9604,7 @@ export namespace TopSites {
   }
 
   /** Gets a list of top sites. */
-  export const get: jest.MockedFunction<typeof chrome.topSites.get>
+  export const get: MockedFunction<typeof chrome.topSites.get>
 }
 
 ////////////////////
@@ -9668,13 +9702,13 @@ export namespace Tts {
   }
 
   /** Checks whether the engine is currently speaking. On Mac OS X, the result is true whenever the system speech engine is speaking, even if the speech wasn't initiated by Chrome. */
-  export const isSpeaking: jest.MockedFunction<typeof chrome.tts.isSpeaking>
+  export const isSpeaking: MockedFunction<typeof chrome.tts.isSpeaking>
 
   /** Stops any current speech and flushes the queue of any pending utterances. In addition, if speech was paused, it will now be un-paused for the next call to speak. */
-  export const stop: jest.MockedFunction<typeof chrome.tts.stop>
+  export const stop: MockedFunction<typeof chrome.tts.stop>
 
   /** Gets an array of all available voices. */
-  export const getVoices: jest.MockedFunction<typeof chrome.tts.getVoices>
+  export const getVoices: MockedFunction<typeof chrome.tts.getVoices>
   /**
    * Speaks text using a text-to-speech engine.
    *
@@ -9682,21 +9716,21 @@ export namespace Tts {
    *
    * @param callback Optional. Called right away, before speech finishes. Check JestChrome.runtime.lastError to make sure there were no errors. Use options.onEvent to get more detailed feedback.
    */
-  export const speak: jest.MockedFunction<typeof chrome.tts.speak>
+  export const speak: MockedFunction<typeof chrome.tts.speak>
 
   /**
    * Pauses speech synthesis, potentially in the middle of an utterance. A call to resume or stop will un-pause speech.
    *
    * @since Chrome 29.
    */
-  export const pause: jest.MockedFunction<typeof chrome.tts.pause>
+  export const pause: MockedFunction<typeof chrome.tts.pause>
 
   /**
    * If speech was paused, resumes speaking where it left off.
    *
    * @since Chrome 29.
    */
-  export const resume: jest.MockedFunction<typeof chrome.tts.resume>
+  export const resume: MockedFunction<typeof chrome.tts.resume>
 }
 
 ////////////////////
@@ -9734,30 +9768,32 @@ export namespace TtsEngine {
   }
 
   export interface TtsEngineSpeakEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (
         utterance: string,
         options: SpeakOptions,
-        sendTtsEvent: (event: JestChromeNamespace.tts.TtsEvent) => void,
+        sendTtsEvent: (
+          event: VitestChromeNamespace.tts.TtsEvent,
+        ) => void,
       ) => void
     > {}
 
   /** Called when the user makes a call to tts.speak() and one of the voices from this extension's manifest is the first to match the options object. */
   export const onSpeak: TtsEngineSpeakEvent
   /** Fired when a call is made to tts.stop and this extension may be in the middle of speaking. If an extension receives a call to onStop and speech is already stopped, it should do nothing (not raise an error). If speech is in the paused state, this should cancel the paused state. */
-  export const onStop: JestChromeNamespace.events.Event<() => void>
+  export const onStop: VitestChromeNamespace.events.Event<() => void>
   /**
    * Optional: if an engine supports the pause event, it should pause the current utterance being spoken, if any, until it receives a resume event or stop event. Note that a stop event should also clear the paused state.
    *
    * @since Chrome 29.
    */
-  export const onPause: JestChromeNamespace.events.Event<() => void>
+  export const onPause: VitestChromeNamespace.events.Event<() => void>
   /**
    * Optional: if an engine supports the pause event, it should also support the resume event, to continue speaking the current utterance, if any. Note that a stop event should also clear the paused state.
    *
    * @since Chrome 29.
    */
-  export const onResume: JestChromeNamespace.events.Event<() => void>
+  export const onResume: VitestChromeNamespace.events.Event<() => void>
 }
 
 ////////////////////
@@ -9848,7 +9884,9 @@ export namespace Types {
   }
 
   export interface ChromeSettingChangedEvent
-    extends JestChromeNamespace.events.Event<DetailsCallback> {}
+    extends VitestChromeNamespace.events.Event<
+      DetailsCallback
+    > {}
 
   /** An interface that allows access to a Chrome browser setting. See accessibilityFeatures for an example. */
   export interface ChromeSetting {
@@ -9923,20 +9961,22 @@ export namespace VpnProvider {
   }
 
   export interface VpnPlatformMessageEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (id: string, message: string, error: string) => void
     > {}
 
   export interface VpnPacketReceptionEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (data: ArrayBuffer) => void
     > {}
 
   export interface VpnConfigRemovalEvent
-    extends JestChromeNamespace.events.Event<(id: string) => void> {}
+    extends VitestChromeNamespace.events.Event<
+      (id: string) => void
+    > {}
 
   export interface VpnConfigCreationEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (
         id: string,
         name: string,
@@ -9945,7 +9985,7 @@ export namespace VpnProvider {
     > {}
 
   export interface VpnUiEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (event: string, id?: string) => void
     > {}
 
@@ -9958,7 +9998,7 @@ export namespace VpnProvider {
    *
    * Parameter id: A unique ID for the created configuration, empty string on failure.
    */
-  export const createConfig: jest.MockedFunction<typeof chrome.vpnProvider.createConfig>
+  export const createConfig: MockedFunction<typeof chrome.vpnProvider.createConfig>
   /**
    * Destroys a VPN configuration created by the extension.
    *
@@ -9966,7 +10006,7 @@ export namespace VpnProvider {
    *
    * @param callback Optional. Called when the configuration is destroyed or if there is an error.
    */
-  export const destroyConfig: jest.MockedFunction<typeof chrome.vpnProvider.destroyConfig>
+  export const destroyConfig: MockedFunction<typeof chrome.vpnProvider.destroyConfig>
   /**
    * Sets the parameters for the VPN session. This should be called immediately after "connected" is received from the platform. This will succeed only when the VPN session is owned by the extension.
    *
@@ -9974,7 +10014,7 @@ export namespace VpnProvider {
    *
    * @param callback Called when the parameters are set or if there is an error.
    */
-  export const setParameters: jest.MockedFunction<typeof chrome.vpnProvider.setParameters>
+  export const setParameters: MockedFunction<typeof chrome.vpnProvider.setParameters>
   /**
    * Sends an IP packet through the tunnel created for the VPN session. This will succeed only when the VPN session is owned by the extension.
    *
@@ -9982,7 +10022,7 @@ export namespace VpnProvider {
    *
    * @param callback Optional. Called when the packet is sent or if there is an error.
    */
-  export const sendPacket: jest.MockedFunction<typeof chrome.vpnProvider.sendPacket>
+  export const sendPacket: MockedFunction<typeof chrome.vpnProvider.sendPacket>
   /**
    * Notifies the VPN session state to the platform. This will succeed only when the VPN session is owned by the extension.
    *
@@ -9994,7 +10034,7 @@ export namespace VpnProvider {
    *
    * @param callback Optional. Called when the notification is complete or if there is an error.
    */
-  export const notifyConnectionStateChanged: jest.MockedFunction<typeof chrome.vpnProvider.notifyConnectionStateChanged>
+  export const notifyConnectionStateChanged: MockedFunction<typeof chrome.vpnProvider.notifyConnectionStateChanged>
 
   /** Triggered when a message is received from the platform for a VPN configuration owned by the extension. */
   export const onPlatformMessage: VpnPlatformMessageEvent
@@ -10045,7 +10085,7 @@ export namespace Wallpaper {
    *
    * Optional parameter thumbnail: The jpeg encoded wallpaper thumbnail. It is generated by resizing the wallpaper to 128x60.
    */
-  export const setWallpaper: jest.MockedFunction<typeof chrome.wallpaper.setWallpaper>
+  export const setWallpaper: MockedFunction<typeof chrome.wallpaper.setWallpaper>
 }
 
 ////////////////////
@@ -10174,12 +10214,15 @@ export namespace WebNavigation {
 
   export interface WebNavigationEventFilter {
     /** Conditions that the URL being navigated to must satisfy. The 'schemes' and 'ports' fields of UrlFilter are ignored for this event. */
-    url: JestChromeNamespace.events.UrlFilter[]
+    url: VitestChromeNamespace.events.UrlFilter[]
   }
 
   export interface WebNavigationEvent<
     T extends WebNavigationCallbackDetails
-  > extends JestChromeNamespace.events.Event<(details: T) => void> {
+  >
+    extends VitestChromeNamespace.events.Event<
+      (details: T) => void
+    > {
     addListener(
       callback: (details: T) => void,
       filters?: WebNavigationEventFilter,
@@ -10225,7 +10268,7 @@ export namespace WebNavigation {
    *
    * Optional parameter details: Information about the requested frame, null if the specified frame ID and/or tab ID are invalid.
    */
-  export const getFrame: jest.MockedFunction<typeof chrome.webNavigation.getFrame>
+  export const getFrame: MockedFunction<typeof chrome.webNavigation.getFrame>
   /**
    * Retrieves information about all frames of a given tab.
    *
@@ -10235,7 +10278,7 @@ export namespace WebNavigation {
    *
    * Optional parameter details: A list of frames in the given tab, null if the specified tab ID is invalid.
    */
-  export const getAllFrames: jest.MockedFunction<typeof chrome.webNavigation.getAllFrames>
+  export const getAllFrames: MockedFunction<typeof chrome.webNavigation.getAllFrames>
 
   /** Fired when the reference fragment of a frame was updated. All future events for that frame will use the updated URL. */
   export const onReferenceFragmentUpdated: WebNavigationTransitionalEvent
@@ -10483,7 +10526,7 @@ export namespace WebRequest {
   }
 
   export interface WebRequestBodyEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (details: WebRequestBodyDetails) => BlockingResponse | void
     > {
     addListener(
@@ -10496,7 +10539,7 @@ export namespace WebRequest {
   }
 
   export interface WebRequestHeadersSynchronousEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (
         details: WebRequestHeadersDetails,
       ) => BlockingResponse | void
@@ -10511,7 +10554,7 @@ export namespace WebRequest {
   }
 
   export interface WebRequestHeadersEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (details: WebRequestHeadersDetails) => void
     > {
     addListener(
@@ -10524,7 +10567,10 @@ export namespace WebRequest {
   // eslint-disable-next-line
   export interface _WebResponseHeadersEvent<
     T extends WebResponseHeadersDetails
-  > extends JestChromeNamespace.events.Event<(details: T) => void> {
+  >
+    extends VitestChromeNamespace.events.Event<
+      (details: T) => void
+    > {
     addListener(
       callback: (details: T) => void,
       filter?: RequestFilter,
@@ -10533,7 +10579,7 @@ export namespace WebRequest {
   }
 
   export interface WebResponseHeadersEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (
         details: WebResponseHeadersDetails,
       ) => BlockingResponse | void
@@ -10556,7 +10602,7 @@ export namespace WebRequest {
     > {}
 
   export interface WebAuthenticationChallengeEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (
         details: WebAuthenticationChallengeDetails,
         callback?: (response: BlockingResponse) => void,
@@ -10583,7 +10629,7 @@ export namespace WebRequest {
   export const MAX_HANDLER_BEHAVIOR_CHANGED_CALLS_PER_10_MINUTES: number
 
   /** Needs to be called when the behavior of the webRequest handlers has changed to prevent incorrect handling due to caching. This function call is expensive. Don't call it often. */
-  export const handlerBehaviorChanged: jest.MockedFunction<typeof chrome.webRequest.handlerBehaviorChanged>
+  export const handlerBehaviorChanged: MockedFunction<typeof chrome.webRequest.handlerBehaviorChanged>
 
   /** Fired when a request is about to occur. */
   export const onBeforeRequest: WebRequestBodyEvent
@@ -10661,13 +10707,15 @@ export namespace Webstore {
    *
    * * * "launchInProgress": A launch of the same extension is in progress.
    */
-  export const install: jest.MockedFunction<typeof chrome.webstore.install>
+  export const install: MockedFunction<typeof chrome.webstore.install>
 
   export interface InstallationStageEvent
-    extends JestChromeNamespace.events.Event<(stage: string) => void> {}
+    extends VitestChromeNamespace.events.Event<
+      (stage: string) => void
+    > {}
 
   export interface DownloadProgressEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (percentDownloaded: number) => void
     > {}
 
@@ -10698,7 +10746,7 @@ export namespace Webstore {
 export namespace Windows {
   export interface Window {
     /** Array of tabs.Tab objects representing the current tabs in the window. */
-    tabs?: JestChromeNamespace.tabs.Tab[]
+    tabs?: VitestChromeNamespace.tabs.Tab[]
     /** Optional. The offset of the window from the top edge of the screen in pixels. Under some circumstances a Window may not be assigned top property, for example when querying closed windows from the sessions API. */
     top?: number
     /** Optional. The height of the window, including the frame, in pixels. Under some circumstances a Window may not be assigned height property, for example when querying closed windows from the sessions API. */
@@ -10860,12 +10908,12 @@ export namespace Windows {
   }
 
   export interface WindowIdEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (windowId: number, filters?: WindowEventFilter) => void
     > {}
 
   export interface WindowReferenceEvent
-    extends JestChromeNamespace.events.Event<
+    extends VitestChromeNamespace.events.Event<
       (window: Window, filters?: WindowEventFilter) => void
     > {}
 
@@ -10883,12 +10931,12 @@ export namespace Windows {
   export const WINDOW_ID_NONE: number
 
   /** Gets details about a window. */
-  export const get: jest.MockedFunction<typeof chrome.windows.get>
+  export const get: MockedFunction<typeof chrome.windows.get>
 
   /**
    * Gets the current window.
    */
-  export const getCurrent: jest.MockedFunction<typeof chrome.windows.getCurrent>
+  export const getCurrent: MockedFunction<typeof chrome.windows.getCurrent>
 
   /**
    * Creates (opens) a new browser with any optional sizing, position or default URL provided.
@@ -10897,21 +10945,21 @@ export namespace Windows {
    *
    * Optional parameter window: Contains details about the created window.
    */
-  export const create: jest.MockedFunction<typeof chrome.windows.create>
+  export const create: MockedFunction<typeof chrome.windows.create>
 
   /**
    * Gets all windows.
    */
-  export const getAll: jest.MockedFunction<typeof chrome.windows.getAll>
+  export const getAll: MockedFunction<typeof chrome.windows.getAll>
 
   /** Updates the properties of a window. Specify only the properties that you want to change; unspecified properties will be left unchanged. */
-  export const update: jest.MockedFunction<typeof chrome.windows.update>
+  export const update: MockedFunction<typeof chrome.windows.update>
   /** Removes (closes) a window, and all the tabs inside it. */
-  export const remove: jest.MockedFunction<typeof chrome.windows.remove>
+  export const remove: MockedFunction<typeof chrome.windows.remove>
   /**
    * Gets the window that was most recently focused — typically the window 'on top'.
    */
-  export const getLastFocused: jest.MockedFunction<typeof chrome.windows.getLastFocused>
+  export const getLastFocused: MockedFunction<typeof chrome.windows.getLastFocused>
 
   /** Fired when a window is removed (closed). */
   export const onRemoved: WindowIdEvent
