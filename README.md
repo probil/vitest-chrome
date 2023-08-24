@@ -1,3 +1,8 @@
+[![Stand With Ukraine](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/banner-direct-single.svg)](https://stand-with-ukraine.pp.ua)
+
+---
+
+
 # `vitest-chrome`
 
 A complete mock of the Chrome API for Chrome extensions, for use
