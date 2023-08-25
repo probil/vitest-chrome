@@ -6,6 +6,7 @@ import json from '@rollup/plugin-json'
 export default [
   {
     input: 'src/index.ts',
+    external: ['vitest'],
     output: [
       {
         file: 'lib/index.esm.js',
