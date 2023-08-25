@@ -38,7 +38,7 @@ Use the setup file to assign the mocked `chrome` object to the
 
 ```javascript
 // vitest.init.js
-import * as chrome from '../src/index'
+import * as chrome from 'vitest-chrome'
 
 // Add chrome object to global scope
 Object.assign(global, chrome)
@@ -70,6 +70,8 @@ those arguments.
 `clearListeners` removes all listeners for a specific Event.
 
 ```javascript
+import { vi, expect, test } from 'vitest'
+
 test('chrome api events', () => {
   const listenerSpy = vi.fn()
   const sendResponseSpy = vi.fn()
@@ -100,6 +102,8 @@ Some Chrome API functions are synchronous. Use these like any
 mocked function:
 
 ```javascript
+import { expect, test } from 'vitest'
+
 test('chrome api functions', () => {
   const manifest = {
     name: 'my chrome extension',
@@ -123,6 +127,8 @@ set to handle the callback.
 > Mocked functions have no default mock implementation!
 
 ```javascript
+import { vi, expect, test } from 'vitest'
+
 test('chrome api functions with callback', () => {
   const message = { greeting: 'hello?' }
   const response = { greeting: 'here I am' }
@@ -162,6 +168,8 @@ will log the error to the console. To emulate this, simply set
 below:
 
 ```javascript
+import { vi, expect, test } from 'vitest'
+
 test('chrome api functions with lastError', () => {
   const message = { greeting: 'hello?' }
   const response = { greeting: 'here I am' }
