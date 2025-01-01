@@ -26,6 +26,7 @@
     "vitest-chrome.d.ts"
   ],
   "scripts": {
+    "prepare": "run-s build",
     "build": "run-s build:clean build:pro build:types build:copy",
     "build:clean": "rm -rf lib types",
     "build:copy": "copyfiles -f src/vitest-chrome.d.ts types",
